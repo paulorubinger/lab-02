@@ -3,8 +3,7 @@ import os
 import subprocess
 
 INPUT_FILE = "data/raw/top_1000_java_repositories.csv"
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-CLONE_FOLDER = os.path.join(BASE_DIR, "repos")
+CLONE_FOLDER = "repos"
 MAX_REPOS = 1
 
 def create_clone_folder():
