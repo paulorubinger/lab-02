@@ -1,7 +1,3 @@
-import os
-import requests
-import csv
-
 from github_api.client import run_query
 
 def fetch_repositories(query, total):
