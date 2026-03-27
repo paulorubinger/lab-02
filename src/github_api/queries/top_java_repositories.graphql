@@ -1,0 +1,27 @@
+query ($cursor: String) {
+  search(
+    query: "language:Java sort:stars",
+    type: REPOSITORY,
+    first: 10,
+    after: $cursor
+  ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      ... on Repository {
+        name
+        owner {
+          login
+        }
+        stargazerCount
+        createdAt
+        url
+        releases {
+          totalCount
+        }
+      }
+    }
+  }
+}
