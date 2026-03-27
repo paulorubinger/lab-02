@@ -4,7 +4,7 @@ import subprocess
 
 INPUT_FILE = "data/raw/repositories.csv"
 CLONE_FOLDER = "repos"
-MAX_REPOS = 2
+MAX_REPOS = 1
 
 def create_clone_folder():
     os.makedirs(CLONE_FOLDER, exist_ok=True)
