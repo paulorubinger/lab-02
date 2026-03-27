@@ -2,7 +2,7 @@ import csv
 import os
 import subprocess
 
-INPUT_FILE = "data/raw/top_1000_java_repositories.csv"
+INPUT_FILE = "data/raw/repositories.csv"
 CLONE_FOLDER = "repos"
 MAX_REPOS = 1
 
