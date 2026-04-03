@@ -24,6 +24,8 @@ def clone_repository(repo_url, repo_name, index, max_repos):
 def clone_repositories(file_path, max_repos=5):
     create_clone_folder()
 
+    print(f"\nStarting clone of {max_repos} repositories...")
+
     with open(file_path, newline="", encoding="utf-8") as file:
         reader = csv.DictReader(file)
 
