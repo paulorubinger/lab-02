@@ -1,8 +1,0 @@
-file,class,method,variable,usage
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo,selectLanguage/1[java.util.Scanner],LANGUAGES,3
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo,"translateFile/3[java.nio.file.Path,java.nio.file.Path,java.lang.String]",CHUNK_SIZE,1
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo,loadProgress/1[java.nio.file.Path],PROGRESS_FILE,1
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo,"saveProgress/2[java.nio.file.Path,TranslateRepo.TranslationProgress]",PROGRESS_FILE,1
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo$Language,"Language/3[java.lang.String,java.lang.String,java.lang.String]",code,3
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo$Language,"Language/3[java.lang.String,java.lang.String,java.lang.String]",name,3
-C:\Users\paulo\Documents\GitHub\lab-exp-software\LAB-02\repos\Snailclimb_JavaGuide\TranslateRepo.java,TranslateRepo$Language,"Language/3[java.lang.String,java.lang.String,java.lang.String]",suffix,3

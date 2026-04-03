@@ -14,7 +14,7 @@ def extract_metrics(repo):
 CK_JAR = "ck.jar"
 REPOS_FOLDER = "repos"
 CK_METRICS_FOLDER = "data/raw/ck_metrics"
-EXPECTED_CK_FILES = ["class.csv", "method.csv", "variable.csv", "field.csv"]
+EXPECTED_CK_FILES = ["class.csv", "method.csv"]
 
 def run_ck(repo_path: str, ck_jar: str, output_folder: str):
     os.makedirs(output_folder, exist_ok=True)
@@ -26,7 +26,7 @@ def run_ck(repo_path: str, ck_jar: str, output_folder: str):
     print(f"  Analyzing: {repo_path}...")
 
     result = subprocess.run([
-        "java", "-jar", abs_ck_jar, abs_repo_path, "true", "0", "true"
+        "java", "-jar", abs_ck_jar, abs_repo_path, "false", "0", "false"
     ], cwd=abs_output_folder, capture_output=True, text=True)
 
     if result.returncode != 0:
