@@ -1,35 +1,64 @@
+#!/usr/bin/env python3
+"""
+Main pipeline for collecting and analyzing CK metrics from 1000 GitHub Java repositories.
+Uses batch processing to minimize disk usage: clone -> analyze -> delete -> repeat.
+"""
+
+import os
 from github_api.repositories import fetch_repositories
-from processing.metrics import extract_metrics, run_ck_all_repos
-from processing.analysis import CKAnalysis
-from clone.clone_repositories import clone_repositories
 from utils.save_csv import save_to_csv
 from utils.load_query import load_query
+from processing.batch_processor import BatchProcessor
 
 def main():
-    # Load the GraphQL query to fetch top Java repositories from GitHub
-    query = load_query("src/github_api/queries/top_java_repositories.graphql")
+    # 1. Fetch repositories (if not already fetched)
+    print("\n" + "="*80)
+    print("STEP 1: FETCHING TOP 1000 JAVA REPOSITORIES FROM GITHUB")
+    print("="*80 + "\n")
+    
+    query_path = "src/github_api/queries/top_java_repositories.graphql"
+    repositories_csv = "data/raw/repositories.csv"
+    
+    if not os.path.exists(repositories_csv):
+        print("Repository list not found. Fetching from GitHub...\n")
+        
+        query = load_query(query_path)
+        repositories = fetch_repositories(query, total=1000)
+        
+        save_to_csv(repositories, repositories_csv)
+        
+        print(f"\n✓ Fetched {len(repositories)} repositories")
+    else:
+        import csv
+        with open(repositories_csv) as f:
+            num_repos = sum(1 for _ in csv.DictReader(f))
+        print(f"Using existing repository list: {num_repos} repositories")
+        print(f"  Location: {os.path.abspath(repositories_csv)}\n")
+    
+    # 2. Batch process repositories
+    print("\n" + "="*80)
+    print("STEP 2: BATCH PROCESSING (Clone -> CK -> Save -> Delete)")
+    print("="*80 + "\n")
+    print("Processing strategy: 1 repository at a time to minimize disk usage")
+    
+    processor = BatchProcessor(
+        repositories_csv=repositories_csv,
+        ck_jar="ck.jar",
+        ck_metrics_folder="data/raw/ck_metrics",
+        consolidated_csv="data/processed/consolidated_metrics.csv",
+        progress_file="data/processed/progress.txt"
+    )
+    
+    processor.process_all_repositories(resume=True)
+    
+    print("\n" + "="*80)
+    print("PIPELINE COMPLETE")
+    print("="*80 + "\n")
+    print("Next steps:")
+    print("  1. Run final analysis on consolidated_metrics.csv")
+    print("  2. Generate visualizations")
+    print("  3. Create final report\n")
 
-    # Search for repositories using the GitHub API
-    nodes = fetch_repositories(query, total=1000)
-
-    # Extract relevant metrics from each repository
-    repositories = [extract_metrics(repo) for repo in nodes]
-
-    csv_file = "data/raw/repositories.csv"
-
-    # Save the repository data to a CSV file
-    save_to_csv(repositories, csv_file)
-
-    # Clone the repositories using Git and save them locally
-    clone_repositories(csv_file, max_repos=100)
-
-    # Analyze the cloned repositories using CK and save the metrics
-    run_ck_all_repos()
-
-    # Perform analysis on the collected CK metrics
-    print("\nStarting CK metrics analysis...")
-    analysis = CKAnalysis()
-    analysis.run_full_analysis()
 
 if __name__ == "__main__":
     main()
