@@ -1,20 +1,63 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# ============================================================================
+# TEMPORARY DATA & GENERATED FILES (Should NOT be versioned)
+# ============================================================================
 
-# VS Code
-.vscode/
-
-# Ambiente virtual
-.venv/
-
-# Variáveis de ambiente
-.env
-
-# Repositórios
+# Repository clones (temporary, can be very large)
 repos/
 
-# Logs
-logs/
+# CK metrics output (temporary, large CSV files per repository)
+data/raw/ck_metrics/
+
+# Processing progress tracking (resume marker)
+data/processed/progress.txt
+
+# Processing logs (execution records, generated each run)
+logs/processing_*.json
+
+# ============================================================================
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ============================================================================
+# Virtual Environment
+# ============================================================================
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# ============================================================================
+# IDE & Editors
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.code-workspace
