@@ -15,3 +15,6 @@ __pycache__/
 
 # Repositórios
 repos/
+
+# Logs
+logs/

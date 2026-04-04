@@ -8,6 +8,7 @@ import csv
 import shutil
 import subprocess
 import pandas as pd
+from src.utils.processing_logger import ProcessingLogger
 
 
 class BatchProcessor:
@@ -20,7 +21,8 @@ class BatchProcessor:
         progress_file: str = "data/processed/progress.txt",
         keep_repos: bool = False,
         keep_metrics: bool = False,
-        verbose: bool = False
+        verbose: bool = False,
+        logger: ProcessingLogger = None
     ):
         self.repositories_csv = repositories_csv
         self.ck_jar = ck_jar
@@ -31,6 +33,7 @@ class BatchProcessor:
         self.keep_repos = keep_repos
         self.keep_metrics = keep_metrics
         self.verbose = verbose
+        self.logger = logger
         
         os.makedirs("data/processed", exist_ok=True)
         os.makedirs("repos", exist_ok=True)
@@ -122,6 +125,9 @@ class BatchProcessor:
         
         print(f"\n[{current_index}/{total}] Processing {repo_display_name}")
         
+        if self.logger:
+            self.logger.increment_attempted()
+        
         try:
             # 1. Clone repository
             print(f"  Cloning... {repo_name}")
@@ -150,11 +156,16 @@ class BatchProcessor:
             )
             
             if result.returncode != 0:
+                error_msg = result.stderr.strip() if result.stderr else "Unknown error"
                 print(f"  ERROR: Clone failed")
                 if self.verbose or result.stderr:
-                    print(f"    stdout: {result.stdout[:500] if result.stdout else 'N/A'}")
-                    print(f"    stderr: {result.stderr[:500] if result.stderr else 'N/A'}")
+                    print(f"    stderr: {error_msg[:300]}")
+                if self.logger:
+                    self.logger.log_clone_failure(repo_display_name, error_msg)
                 return False
+            
+            if self.logger:
+                self.logger.log_clone_success(repo_display_name)
             
             # 2. Run CK analysis
             print(f"  Running CK analysis...")
@@ -169,33 +180,41 @@ class BatchProcessor:
             ], capture_output=True, text=True, timeout=600)
             
             if result.returncode != 0:
+                error_msg = result.stderr.strip() if result.stderr else "Unknown error"
                 print(f"  ERROR: CK analysis failed")
                 if self.verbose or result.stderr:
-                    print(f"    stdout: {result.stdout[:500] if result.stdout else 'N/A'}")
-                    print(f"    stderr: {result.stderr[:500] if result.stderr else 'N/A'}")
+                    print(f"    stderr: {error_msg[:300]}")
+                if self.logger:
+                    self.logger.log_analysis_failure(repo_display_name, "ck_analysis", error_msg)
                 self.delete_repo_folder(repo_display_name)
                 return False
             
             # 3. Extract and save metrics
             print(f"  Extracting metrics...")
-            metrics = self.extract_repo_metrics(repo_display_name)
-            
-            if not metrics or len(metrics) < 2:
-                print(f"  WARNING: No metrics extracted")
+            try:
+                metrics = self.extract_repo_metrics(repo_display_name)
+                
+                if not metrics or len(metrics) < 2:
+                    raise Exception("No metrics extracted")
+                
+                # Append to consolidated CSV
+                df_new = pd.DataFrame([metrics])
+                if os.path.exists(self.consolidated_csv):
+                    df_existing = pd.read_csv(self.consolidated_csv)
+                    df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+                else:
+                    df_combined = df_new
+                
+                df_combined.to_csv(self.consolidated_csv, index=False)
+                print(f"  ✓ Metrics saved")
+            except Exception as e:
+                error_msg = str(e)
+                print(f"  WARNING: {error_msg}")
+                if self.logger:
+                    self.logger.log_analysis_failure(repo_display_name, "metrics_extraction", error_msg)
                 self.delete_repo_folder(repo_display_name)
                 self.delete_ck_metrics_folder(repo_display_name)
                 return False
-            
-            # Append to consolidated CSV
-            df_new = pd.DataFrame([metrics])
-            if os.path.exists(self.consolidated_csv):
-                df_existing = pd.read_csv(self.consolidated_csv)
-                df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-            else:
-                df_combined = df_new
-            
-            df_combined.to_csv(self.consolidated_csv, index=False)
-            print(f"  ✓ Metrics saved")
             
             # 4. Clean up
             print(f"  Cleaning up...")
@@ -205,17 +224,27 @@ class BatchProcessor:
             # Mark as processed
             self.mark_repo_processed(repo_display_name)
             
+            if self.logger:
+                self.logger.log_analysis_success(repo_display_name)
+            
             print(f"  ✓ Completed")
             return True
             
         except Exception as e:
-            print(f"  ERROR: {e}")
+            error_msg = str(e)
+            print(f"  ERROR: {error_msg}")
+            if self.logger:
+                self.logger.log_analysis_failure(repo_display_name, "process_repo", error_msg)
             self.delete_repo_folder(repo_display_name)
             self.delete_ck_metrics_folder(repo_display_name)
             return False
     
     def process_all_repositories(self, resume: bool = True):
         """Process all repositories one by one."""
+        # Initialize logger if not provided
+        if not self.logger:
+            self.logger = ProcessingLogger()
+        
         print("\n" + "=" * 80)
         print("BATCH PROCESSING REPOSITORIES (One at a time)")
         print("=" * 80)
@@ -251,11 +280,14 @@ class BatchProcessor:
             
             if not success:
                 print(f"  Continuing to next repository...")
-        
+
         print("\n" + "=" * 80)
         print("BATCH PROCESSING COMPLETED")
         print("=" * 80)
-        print(f"\nConsolidated metrics saved to: {self.consolidated_csv}")
+        # Print final summary
+        self.logger.print_summary()
+        
+        print("\nConsolidated metrics saved to: {}\n".format(self.consolidated_csv))
 
 
 if __name__ == "__main__":
