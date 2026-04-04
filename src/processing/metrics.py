@@ -82,6 +82,10 @@ def run_ck_all_repos(
     ck_jar: str = CK_JAR,
     ck_metrics_folder: str = CK_METRICS_FOLDER
 ):
+    print("\n" + "=" * 80)
+    print("STARTING CK METRICS ANALYSIS")
+    print("=" * 80)
+    
     repo_names = get_repositories(repos_folder)
     
     if not repo_names:

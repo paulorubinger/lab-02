@@ -16,10 +16,19 @@ def clone_repository(repo_url, repo_name, index, max_repos):
 
     print(f"Cloning repository {index}/{max_repos}: {repo_name}")
 
-    result = subprocess.run(["git", "clone", repo_url, destination])
+    result = subprocess.run(
+        ["git", "clone", repo_url, destination],
+        capture_output=True,
+        text=True
+    )
 
     if result.returncode != 0:
-        print(f"Error cloning {repo_name}")
+        print(f"  ERROR cloning {repo_name}:")
+        print(f"    {result.stderr.strip()}")
+        return False
+    
+    print(f"  Successfully cloned!")
+    return True
 
 def clone_repositories(file_path, max_repos=5):
     create_clone_folder()

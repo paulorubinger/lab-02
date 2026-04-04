@@ -9,7 +9,7 @@ def fetch_repositories(query, total):
 
         print(f"Fetching repositories... {len(all_repos)}/{total}")
 
-        response = run_query(query)
+        response = run_query(query, {"cursor": cursor})
 
         search = response["data"]["search"]
 
@@ -22,5 +22,7 @@ def fetch_repositories(query, total):
             break
 
         cursor = page_info["endCursor"]
-
-    return all_repos[:total]
+    
+    result = all_repos[:total]
+    print(f"Fetching repositories... {len(result)}/{total}")
+    return result

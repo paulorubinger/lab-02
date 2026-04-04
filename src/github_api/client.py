@@ -14,10 +14,14 @@ HEADERS = {
     "Authorization": f"Bearer {TOKEN}"
 }
 
-def run_query(query: str) -> dict:
+def run_query(query: str, variables: dict = None) -> dict:
+    payload = {"query": query}
+    if variables:
+        payload["variables"] = variables
+    
     response = requests.post(
         GITHUB_API_URL,
-        json={"query": query},
+        json=payload,
         headers=HEADERS,
     )
 
