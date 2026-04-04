@@ -5,10 +5,14 @@ Clones -> Analyzes with CK -> Saves metrics -> Deletes repo.
 
 import os
 import csv
+import sys
 import shutil
 import subprocess
 import pandas as pd
-from src.utils.processing_logger import ProcessingLogger
+
+# Add parent directory to path so we can import from utils/
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from utils.processing_logger import ProcessingLogger
 
 
 class BatchProcessor:

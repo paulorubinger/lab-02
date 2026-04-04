@@ -5,9 +5,18 @@ Uses batch processing to minimize disk usage: clone -> analyze -> delete -> repe
 """
 
 import os
+import sys
+import io
+
+# Configure UTF-8 encoding for Windows console output
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 from github_api.repositories import fetch_repositories
 from utils.save_csv import save_to_csv
 from utils.load_query import load_query
+from utils.processing_logger import ProcessingLogger
 from processing.batch_processor import BatchProcessor
 
 def main():
@@ -41,12 +50,16 @@ def main():
     print("="*80 + "\n")
     print("Processing strategy: 1 repository at a time to minimize disk usage")
     
+    # Create logger
+    logger = ProcessingLogger()
+    
     processor = BatchProcessor(
         repositories_csv=repositories_csv,
         ck_jar="ck.jar",
         ck_metrics_folder="data/raw/ck_metrics",
         consolidated_csv="data/processed/consolidated_metrics.csv",
-        progress_file="data/processed/progress.txt"
+        progress_file="data/processed/progress.txt",
+        logger=logger
     )
     
     processor.process_all_repositories(resume=True)
