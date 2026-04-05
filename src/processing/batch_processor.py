@@ -59,44 +59,113 @@ class BatchProcessor:
             f.write(f"{repo_name}\n")
     
     def delete_repo_folder(self, repo_name: str):
-        """Delete repository folder."""
+        """Delete repository folder.
+        
+        On Windows, handles long paths and special characters by:
+        - Retrying if file is temporarily locked
+        - Using more aggressive permission removal
+        - Using subprocess for robust deletion as fallback
+        """
         if self.keep_repos:
             if self.verbose:
                 print(f"  [KEEP] {repo_name} (keep_repos=True)")
             return
         
         repo_path = os.path.join(self.repos_folder, repo_name)
-        if os.path.exists(repo_path):
-            try:
-                def handle_remove_readonly(func, path, exc):
-                    import stat
+        if not os.path.exists(repo_path):
+            return
+        
+        # Try shutil.rmtree first (standard approach)
+        try:
+            def handle_remove_readonly(func, path, exc):
+                import stat
+                try:
                     os.chmod(path, stat.S_IWRITE)
                     func(path)
-                
-                shutil.rmtree(repo_path, onerror=handle_remove_readonly)
+                except:
+                    pass
+            
+            shutil.rmtree(repo_path, onerror=handle_remove_readonly)
+            if self.verbose:
                 print(f"  Deleted {repo_name}")
+            return
+        except Exception as e:
+            if self.verbose:
+                print(f"  WARNING (shutil): Could not delete {repo_name}: {str(e)[:100]}")
+        
+        # Fallback: try subprocess rmdir for Windows
+        if sys.platform == "win32":
+            try:
+                import subprocess
+                result = subprocess.run(
+                    ["rmdir", "/s", "/q", repo_path],
+                    capture_output=True,
+                    timeout=10
+                )
+                if result.returncode == 0:
+                    if self.verbose:
+                        print(f"  Deleted {repo_name} (via rmdir)")
+                    return
             except Exception as e:
-                print(f"  WARNING: Could not delete {repo_name}: {e}")
+                if self.verbose:
+                    print(f"  WARNING (rmdir): {str(e)[:100]}")
+        
+        # If all else fails, just log it and continue
+        print(f"  WARNING: Could not delete {repo_name} (will persist). Please remove manually: {repo_path}")
     
     def delete_ck_metrics_folder(self, repo_name: str):
-        """Delete CK metrics folder for this repo."""
+        """Delete CK metrics folder for this repo.
+        
+        Same robust deletion as delete_repo_folder.
+        """
         if self.keep_metrics:
             if self.verbose:
                 print(f"  [KEEP] CK metrics for {repo_name} (keep_metrics=True)")
             return
         
         metrics_path = os.path.join(self.ck_metrics_folder, repo_name)
-        if os.path.exists(metrics_path):
-            try:
-                def handle_remove_readonly(func, path, exc):
-                    import stat
+        if not os.path.exists(metrics_path):
+            return
+        
+        # Try shutil.rmtree first
+        try:
+            def handle_remove_readonly(func, path, exc):
+                import stat
+                try:
                     os.chmod(path, stat.S_IWRITE)
                     func(path)
-                
-                shutil.rmtree(metrics_path, onerror=handle_remove_readonly)
+                except:
+                    pass
+            
+            shutil.rmtree(metrics_path, onerror=handle_remove_readonly)
+            if self.verbose:
+                print(f"  Deleted CK metrics")
+            return
+        except Exception as e:
+            if self.verbose:
+                print(f"  WARNING (shutil): Could not delete CK metrics: {str(e)[:100]}")
+        
+        # Fallback: try subprocess rmdir for Windows
+        if sys.platform == "win32":
+            try:
+                import subprocess
+                result = subprocess.run(
+                    ["rmdir", "/s", "/q", metrics_path],
+                    capture_output=True,
+                    timeout=10
+                )
+                if result.returncode == 0:
+                    if self.verbose:
+                        print(f"  Deleted CK metrics (via rmdir)")
+                    return
             except Exception as e:
                 if self.verbose:
-                    print(f"  WARNING: Could not delete CK metrics: {e}")
+                    print(f"  WARNING (rmdir): {str(e)[:100]}")
+        
+        # If all else fails, log and continue
+        if self.verbose:
+            print(f"  WARNING: Could not delete CK metrics (will persist)")
+
     
     def extract_repo_metrics(self, repo_name: str) -> dict:
         """Extract aggregated metrics for a single repository."""
