@@ -491,11 +491,12 @@ Analysis failed: 26 (2.6%)
 
 | Tipo de Falha | Contagem | Repositórios Afetados |
 |---------------|----------|---------------------|
-| CK NullPointerException | 15 | elastic_elasticsearch, NationalSecurityAgency_ghidra, ... |
-| CK StackOverflowError | 1 | JetBrains_intellij-community |
-| Metrics Extraction Empty | 8 | hollischuang_toBeTopJavaer, frank-lam_fullstack-tutorial, ... |
 | Clone Checkout Failed | 1 | NotFound9_interviewGuide |
+| CK NullPointerException | 15 | elastic_elasticsearch, NationalSecurityAgency_ghidra, dbeaver_dbeaver, Anuken_Mindustry, openjdk_jdk, oracle_graal, thingsboard_thingsboard, questdb_questdb, Grasscutters_Grasscutter, neo4j_neo4j, projectlombok_lombok, trinodb_trino, haifengl_smile, google_j2objc, JabRef_jabref |
+| CK StackOverflowError | 1 | JetBrains_intellij-community |
 | CK Timeout | 1 | aws_aws-sdk-java |
+| Metrics Extraction Empty | 7 | hollischuang_toBeTopJavaer, frank-lam_fullstack-tutorial, react-native-camera_react-native-camera, CoderLeixiaoshuai_java-eight-part, Archmage83_tvapk, RedSpider1_concurrent, jlegewie_zotfile |
+| CK Runtime Exception | 2 | checkstyle_checkstyle (EmptyStackException), dragonwell-project_dragonwell8 (ArrayIndexOutOfBoundsException) |
 
 ### C. Dados Brutos
 
@@ -509,5 +510,4 @@ Analysis failed: 26 (2.6%)
 
 ---
 
-**Versão:** 1.0 | **Data:** 05/04/2026 | **Status:** Preliminar
-
+**Versão:** 1.0.1 | **Data:** 06/04/2026 | **Status:** Revisado
