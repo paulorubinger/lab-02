@@ -1,0 +1,24 @@
+
+================================================================================
+ANALYSIS RESULTS - TO BE INSERTED IN RELATORIO_FINAL.md
+================================================================================
+
+## 10.1 Estatísticas Descritivas
+
+**Métricas de Qualidade:**
+
+| Métrica | Média | Mediana | Desvio Padrão | Min | Max |
+|---------|-------|---------|---------------|-----|-----|
+| cbo_avg | 5.37 | 5.33 | 1.87 | 0.00 | 21.89 |
+| dit_avg | 1.46 | 1.39 | 0.35 | 1.00 | 4.39 |
+| lcom_avg | 118.69 | 24.55 | 1740.71 | 0.00 | 54025.11 |
+| wmc_avg | 10.37 | 8.88 | 7.31 | 0.00 | 99.67 |
+| rfc_avg | 10.22 | 9.55 | 5.06 | 0.00 | 64.67 |
+
+## Key Findings
+
+- Total repositories analyzed: 973
+- Mean LOC per repository: 51
+- Average CBO: 5.37
+- Average DIT: 1.46
+- Average LCOM: 118.69

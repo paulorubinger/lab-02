@@ -1,0 +1,37 @@
+{
+  "loc_avg vs cbo_avg": {
+    "spearman_r": 0.4236478587391154,
+    "spearman_p": 1.1752477468134112e-43,
+    "pearson_r": 0.39779040981491914,
+    "pearson_p": 3.0607819365117906e-38,
+    "n": 973.0
+  },
+  "loc_avg vs dit_avg": {
+    "spearman_r": 0.3755359036449394,
+    "spearman_p": 5.996398732037501e-34,
+    "pearson_r": 0.2037466065824056,
+    "pearson_p": 1.4110905675376266e-10,
+    "n": 973.0
+  },
+  "loc_avg vs lcom_avg": {
+    "spearman_r": 0.7326032968404332,
+    "spearman_p": 2.0685096392982613e-164,
+    "pearson_r": 0.09492168472229665,
+    "pearson_p": 0.00303890091608494,
+    "n": 973.0
+  },
+  "loc_avg vs wmc_avg": {
+    "spearman_r": 0.9450425312865118,
+    "spearman_p": 0.0,
+    "pearson_r": 0.9327291161806619,
+    "pearson_p": 0.0,
+    "n": 973.0
+  },
+  "loc_avg vs rfc_avg": {
+    "spearman_r": 0.7899613612039882,
+    "spearman_p": 1.7466206845585007e-208,
+    "pearson_r": 0.7378154516426656,
+    "pearson_p": 6.243327355360835e-168,
+    "n": 973.0
+  }
+}
