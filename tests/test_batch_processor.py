@@ -61,6 +61,8 @@ def test_batch_processor(num_repos: int = 1):
     print("="*80 + "\n")
     
     processor = BatchProcessor(
+        consolidated_csv="data/processed/test_consolidated_metrics.csv",
+        progress_file="data/processed/test_progress.txt",
         keep_repos=True,      # KEEP cloned repos
         keep_metrics=True,    # KEEP CK metrics folder
         verbose=True          # SHOW detailed errors

@@ -20,8 +20,8 @@ def cleanup_test_data():
     items_to_delete = [
         ("repos/", "Cloned repositories"),
         ("data/raw/ck_metrics/", "CK metrics output"),
-        ("data/processed/progress.txt", "Progress tracking file"),
-        ("data/processed/consolidated_metrics.csv", "Consolidated metrics CSV")
+        ("data/processed/test_progress.txt", "Test progress tracking file"),
+        ("data/processed/test_consolidated_metrics.csv", "Test consolidated metrics CSV")
     ]
     
     deleted_count = 0
@@ -68,8 +68,8 @@ if __name__ == "__main__":
         items_to_delete = [
             ("repos/", "Cloned repositories"),
             ("data/raw/ck_metrics/", "CK metrics output"),
-            ("data/processed/progress.txt", "Progress tracking file"),
-            ("data/processed/consolidated_metrics.csv", "Consolidated metrics CSV")
+            ("data/processed/test_progress.txt", "Test progress tracking file"),
+            ("data/processed/test_consolidated_metrics.csv", "Test consolidated metrics CSV")
         ]
         
         print("This will delete:")

@@ -14,6 +14,10 @@ data/processed/progress.txt
 # Processing logs (execution records, generated each run)
 logs/processing_*.json
 
+# Tests
+data/processed/test_consolidated_metrics.csv
+data/processed/test_progress.txt
+
 # ============================================================================
 # Python
 # ============================================================================
