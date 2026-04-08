@@ -104,7 +104,8 @@ python tests/inspect_test_data.py
 Isso mostra:
 - Pastas clonadas em `repos/`
 - CSVs do CK em `data/raw/ck_metrics/`
-- Dados consolidados em `data/processed/consolidated_metrics.csv`
+- Dados consolidados em `data/processed/test_consolidated_metrics.csv`
+- Progresso em `data/processed/test_progress.txt`
 
 ### Passo 3: Limpe (se tudo OK)
 ```powershell
@@ -127,7 +128,7 @@ ERROR: CK analysis failed
 
 **Causas comuns:**
 1. Java não instalado → instale JDK
-2. `ck.jar` não encontrado → baixe em https://github.com/mauricioaniche/ck/releases
+2. `ck.jar` não encontrado → baixe em https://github.com/mauricioaniche/ck
 3. Repositório sem código Java → ignora e continua
 
 ## 📂 Estrutura de Arquivos Gerados
@@ -143,8 +144,8 @@ LAB-02/
 │   │       ├── owner_repo1/
 │   │       └── owner_repo2/
 │   └── processed/
-│       ├── consolidated_metrics.csv  # Métricas agregadas
-│       └── progress.txt              # Qual repos já foi processado
+│       ├── test_consolidated_metrics.csv  # Métricas agregadas
+│       └── test_progress.txt              # Qual repos já foi processado
 └── tests/
     ├── test_batch_processor.py
     ├── inspect_test_data.py

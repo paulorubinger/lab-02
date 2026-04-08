@@ -4,10 +4,7 @@ Inspect generated test files - check repos, metrics, CSV contents.
 """
 
 import os
-import csv
-import sys
 import pandas as pd
-from pathlib import Path
 
 # Change to parent directory so relative paths work
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -58,7 +55,7 @@ def inspect_ck_metrics():
 
 def inspect_metrics_csv():
     """Show consolidated metrics CSV contents."""
-    csv_file = "data/processed/consolidated_metrics.csv"
+    csv_file = "data/processed/test_consolidated_metrics.csv"
     if not os.path.exists(csv_file):
         print(f"  (not found)")
         return
@@ -75,7 +72,7 @@ def inspect_metrics_csv():
 
 def inspect_progress():
     """Show progress file."""
-    prog_file = "data/processed/progress.txt"
+    prog_file = "data/processed/test_progress.txt"
     if not os.path.exists(prog_file):
         print(f"  (not found)")
         return
@@ -101,10 +98,10 @@ def main():
     print("\n📊 CK Metrics Output (data/raw/ck_metrics/):")
     inspect_ck_metrics()
     
-    print("\n📈 Consolidated Metrics (data/processed/consolidated_metrics.csv):")
+    print("\n📈 Consolidated Metrics (data/processed/test_consolidated_metrics.csv):")
     inspect_metrics_csv()
     
-    print("\n✓ Progress Tracking (data/processed/progress.txt):")
+    print("\n✓ Progress Tracking (data/processed/test_progress.txt):")
     inspect_progress()
     
     print("\n" + "="*80)
