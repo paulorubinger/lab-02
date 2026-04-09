@@ -185,8 +185,10 @@ class BatchProcessor:
                         valid_values = pd.to_numeric(class_df[metric], errors='coerce').dropna()
                         if len(valid_values) > 0:
                             metrics[f'{metric}_avg'] = valid_values.mean()
-                            metrics[f'{metric}_max'] = valid_values.max()
                             metrics[f'{metric}_median'] = valid_values.median()
+                            metrics[f'{metric}_min'] = valid_values.min()
+                            metrics[f'{metric}_max'] = valid_values.max()
+                            metrics[f'{metric}_std'] = valid_values.std()
             except:
                 pass
         
