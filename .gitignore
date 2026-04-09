@@ -12,8 +12,11 @@ data/raw/ck_metrics/
 logs/processing_*.json
 
 # Tests
-data/processed/test_consolidated_metrics.csv
-data/processed/test_progress.txt
+data/processed/test_*.csv
+data/processed/test_*.txt
+data/raw/test_*.csv
+reports/figures/scatter_*.png
+tests/test_std_calculation.py
 
 # ============================================================================
 # Python
