@@ -225,7 +225,7 @@ class BatchProcessor:
                 ["git", "clone", "--depth", "1", repo_url, repo_destination],
                 capture_output=True,
                 text=True,
-                timeout=300
+                timeout=600
             )
             
             if result.returncode != 0:
@@ -249,8 +249,9 @@ class BatchProcessor:
             os.makedirs(ck_output, exist_ok=True)
             
             result = subprocess.run([
-                "java", "-jar", self.ck_jar, repo_path, "false", "0", "false", ck_output
-            ], capture_output=True, text=True, timeout=600)
+                "java", "-jar", self.ck_jar, repo_path, "true", "0", "false", ck_output,
+                "src/test/resources"  # Ignore test fixture files (may contain unsupported Java syntax)
+            ], capture_output=True, text=True, timeout=1200)
             
             if result.returncode != 0:
                 error_msg = result.stderr.strip() if result.stderr else "Unknown error"
