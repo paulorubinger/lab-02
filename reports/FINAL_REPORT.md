@@ -6,7 +6,7 @@
 
 **Autor:** Paulo Victor Pimenta Rubinger  
 **Data:** 05 de Abril de 2026  
-**Versão do Relatório:** 1.0.2  
+**Versão do Relatório:** 1.0.3  
 **Repositório:** [https://github.com/PauloRubinger/LAB-02](https://github.com/PauloRubinger/LAB-02)  
 **Disciplina:** Laboratório de Experimentação de Software (6º período - Engenharia de Software)  
 **Professor:** João Paulo Carneiro Aramuni
@@ -15,13 +15,13 @@
 
 ## 2. Resumo
 
-Este experimento analisou **987 repositórios Java** da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM).
+Este experimento analisou **975 repositórios Java** da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM).
 
 ### Principais Resultados
-- **973 repositórios (97.3%)** foram analisados com sucesso
+- **975 repositórios (97.5%)** foram analisados com sucesso
 - **Correlações significativas** encontradas entre tamanho do código e acoplamento
 - **Repositórios maiores** tendem a ter **maior complexidade**
-- Taxa de sucesso na coleta: 99.9% (clone) e 97.4% (análise)
+- Taxa de sucesso na coleta: 100% (clone) e 97.5% (análise)
 
 ### Decisão Recomendada
 Proceder com análise completa dos dados coletados, utilizando técnicas estatísticas mais avançadas (Spearman, Pearson) para validar as correlações encontradas.
@@ -119,14 +119,17 @@ Para cada repositório:
 
 | Material | Versão | Propósito |
 |----------|--------|----------|
-| Python | 3.11 | Orquestração e análise |
+| Python | 3.14.3 | Orquestração e análise |
 | GitHub GraphQL API | v4 | Coleta de repositórios |
-| Git | 2.x | Clone de repositórios |
-| CK | 0.5.1+ | Análise estática Java |
-| Pandas | 1.x | Manipulação de dados |
-| Scipy / Scikit-learn | 1.x | Análise estatística |
-| Matplotlib / Seaborn | 3.x | Visualização |
-| Jupyter Notebook | 7.x | Análise interativa |
+| Git | 2.40.0 | Clone de repositórios |
+| CK | 0.7.1-SNAPSHOT | Análise estática de código Java |
+| requests | 2.33.0 | Requisições HTTP para coleta via API |
+| python-dotenv | 1.2.2 | Carregamento de variáveis de ambiente |
+| pandas | >=2.0.0 | Manipulação e consolidação de dados |
+| numpy | >=1.24.0 | Suporte numérico para análise |
+| scipy | >=1.10.0 | Testes estatísticos e correlações |
+| matplotlib | >=3.7.0 | Geração de gráficos |
+| seaborn | >=0.12.0 | Visualizações estatísticas |
 
 ### 4.4 Métricas e suas Unidades
 
@@ -157,7 +160,7 @@ Para cada repositório:
 
 - **Tamanho:** 1.000 repositórios
 - **Critério de seleção:** Top Java repositories por stars no GitHub
-- **Período:** Snapshot em abril de 2026
+- **Período:** Snapshot 4 de abril de 2026
 - **Incluídos:** Todos os repos com pelo menos 1 Java file
 - **Excluídos:** Repos vazios, forks privados
 
@@ -193,8 +196,8 @@ Consolidate CSV
 ### 6.1 Hardware e Software
 
 - **SO:** Windows 11 / MacOS (desenvolvimento)
-- **Python:** 3.11.9
-- **Java:** 11+ (para CK)
+- **Python:** 3.14.3
+- **Java:** 21.0.3
 - **Git:** 2.40.0
 
 ### 6.2 Versões de Dependências
@@ -217,7 +220,7 @@ seaborn>=0.12.0
 
 - **Origem:** GitHub API (GraphQL)
 - **Tamanho:** 1.000 repositórios
-- **Período:** Snapshot em 04/05/2026
+- **Período:** Snapshot em 04/04/2026
 - **Reprodutibilidade:** Script `src/main.py`
 
 ---
@@ -499,7 +502,7 @@ fetch_per_page: 10
 
 # Git Clone
 depth: 1 (shallow clone para economizar armazenamento em disco)
-timeout: 300s por repo
+timeout: 600s por repo
 
 # Analysis
 batch_size: 1 repo por vez (para economizar armazenamento em disco)
@@ -530,7 +533,7 @@ Analysis failed: 25 (2.5%)
 
 ### C. Dados Brutos
 
-[Ver arquivo: `data/processed/consolidated_metrics.csv` com 973 repositórios e 19 colunas de métricas]
+[Ver arquivo: `data/processed/consolidated_metrics.csv` com 975 repositórios e 19 colunas de métricas]
 
 ---
 
@@ -540,4 +543,4 @@ Analysis failed: 25 (2.5%)
 
 ---
 
-**Versão:** 1.0.2 | **Data:** 09/04/2026 | **Status:** Revisado
+**Versão:** 1.0.3 | **Data:** 09/04/2026 | **Status:** Revisado
