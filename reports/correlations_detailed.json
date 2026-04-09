@@ -1,44 +1,4 @@
 {
-  "loc_avg vs cbo_avg": {
-    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.4249091809187594,
-    "spearman_p": 5.090001799163908e-44,
-    "pearson_r": 0.3981850501934886,
-    "pearson_p": 2.1443444269989664e-38,
-    "n": 975.0
-  },
-  "loc_avg vs dit_avg": {
-    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.37370338860491936,
-    "spearman_p": 1.1245342886140517e-33,
-    "pearson_r": 0.20331804047862698,
-    "pearson_p": 1.4792438644739211e-10,
-    "n": 975.0
-  },
-  "loc_avg vs lcom_avg": {
-    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.7312041612056909,
-    "spearman_p": 8.200770040247924e-164,
-    "pearson_r": 0.09493156049767382,
-    "pearson_p": 0.0030058633265778816,
-    "n": 975.0
-  },
-  "loc_avg vs wmc_avg": {
-    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.9446489101031573,
-    "spearman_p": 0.0,
-    "pearson_r": 0.9323084744444595,
-    "pearson_p": 0.0,
-    "n": 975.0
-  },
-  "loc_avg vs rfc_avg": {
-    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.7903525124088032,
-    "spearman_p": 2.944484232134778e-209,
-    "pearson_r": 0.7379422524444368,
-    "pearson_p": 2.326559145488356e-168,
-    "n": 975.0
-  },
   "stars vs cbo_avg": {
     "rq_name": "RQ01 - Popularidade (Stars) vs Qualidade",
     "spearman_r": 0.026484100309597306,
@@ -81,42 +41,42 @@
   },
   "age_years vs cbo_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.00742992725025371,
-    "spearman_p": 0.8167671543227235,
-    "pearson_r": 0.011786857123558234,
-    "pearson_p": 0.7131826012708322,
+    "spearman_r": 0.007437206588851332,
+    "spearman_p": 0.8165908246655407,
+    "pearson_r": 0.011789429542920456,
+    "pearson_p": 0.7131227704654656,
     "n": 975.0
   },
   "age_years vs dit_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.2875811483129647,
-    "spearman_p": 5.073704381941233e-20,
-    "pearson_r": 0.19099080735741078,
-    "pearson_p": 1.8386423687879949e-09,
+    "spearman_r": 0.28757518882845545,
+    "spearman_p": 5.0830390454491266e-20,
+    "pearson_r": 0.19100952073041183,
+    "pearson_p": 1.831847345855369e-09,
     "n": 975.0
   },
   "age_years vs lcom_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.19498768468354372,
-    "spearman_p": 8.267641684676796e-10,
-    "pearson_r": 0.029599011891644697,
-    "pearson_p": 0.3558792692979023,
+    "spearman_r": 0.19498513807678958,
+    "spearman_p": 8.271897926139586e-10,
+    "pearson_r": 0.029598459156997034,
+    "pearson_p": 0.3558882559533928,
     "n": 975.0
   },
   "age_years vs wmc_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.145079923624017,
-    "spearman_p": 5.405726699463369e-06,
-    "pearson_r": 0.045561236197139934,
-    "pearson_p": 0.15515332726480854,
+    "spearman_r": 0.14509612164244076,
+    "spearman_p": 5.392560520605342e-06,
+    "pearson_r": 0.04556337387060345,
+    "pearson_p": 0.1551339334668142,
     "n": 975.0
   },
   "age_years vs rfc_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.095109510088747,
-    "spearman_p": 0.0029516886794634027,
-    "pearson_r": 0.026408351744228824,
-    "pearson_p": 0.41011778820595246,
+    "spearman_r": 0.09511413739925588,
+    "spearman_p": 0.0029502918921834355,
+    "pearson_r": 0.026409975864905653,
+    "pearson_p": 0.41008898798284693,
     "n": 975.0
   },
   "releases vs cbo_avg": {
@@ -157,6 +117,46 @@
     "spearman_p": 1.1066930850938068e-36,
     "pearson_r": 0.1651365948896719,
     "pearson_p": 2.155355760003895e-07,
+    "n": 975.0
+  },
+  "loc_avg vs cbo_avg": {
+    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
+    "spearman_r": 0.4249091809187594,
+    "spearman_p": 5.090001799163908e-44,
+    "pearson_r": 0.3981850501934886,
+    "pearson_p": 2.1443444269989664e-38,
+    "n": 975.0
+  },
+  "loc_avg vs dit_avg": {
+    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
+    "spearman_r": 0.37370338860491936,
+    "spearman_p": 1.1245342886140517e-33,
+    "pearson_r": 0.20331804047862698,
+    "pearson_p": 1.4792438644739211e-10,
+    "n": 975.0
+  },
+  "loc_avg vs lcom_avg": {
+    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
+    "spearman_r": 0.7312041612056909,
+    "spearman_p": 8.200770040247924e-164,
+    "pearson_r": 0.09493156049767382,
+    "pearson_p": 0.0030058633265778816,
+    "n": 975.0
+  },
+  "loc_avg vs wmc_avg": {
+    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
+    "spearman_r": 0.9446489101031573,
+    "spearman_p": 0.0,
+    "pearson_r": 0.9323084744444595,
+    "pearson_p": 0.0,
+    "n": 975.0
+  },
+  "loc_avg vs rfc_avg": {
+    "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
+    "spearman_r": 0.7903525124088032,
+    "spearman_p": 2.944484232134778e-209,
+    "pearson_r": 0.7379422524444368,
+    "pearson_p": 2.326559145488356e-168,
     "n": 975.0
   }
 }
