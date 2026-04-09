@@ -15,7 +15,6 @@ logs/processing_*.json
 data/processed/test_*.csv
 data/processed/test_*.txt
 data/raw/test_*.csv
-reports/figures/scatter_*.png
 tests/test_std_calculation.py
 
 # ============================================================================
