@@ -8,9 +8,6 @@ repos/
 # CK metrics output (temporary, large CSV files per repository)
 data/raw/ck_metrics/
 
-# Processing progress tracking (resume marker)
-data/processed/progress.txt
-
 # Processing logs (execution records, generated each run)
 logs/processing_*.json
 
