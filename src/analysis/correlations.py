@@ -109,12 +109,12 @@ def calculate_correlations(df):
     
     quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg']
     
-    # Define all process metrics (Research Questions)
+    # Define all process metrics (Research Questions) - in order RQ01-RQ04
     process_metrics = {
-        'loc_avg': 'RQ04 - Tamanho (LOC) vs Qualidade',
         'stars': 'RQ01 - Popularidade (Stars) vs Qualidade',
         'age_years': 'RQ02 - Maturidade (Idade em anos) vs Qualidade',
-        'releases': 'RQ03 - Atividade (Releases) vs Qualidade'
+        'releases': 'RQ03 - Atividade (Releases) vs Qualidade',
+        'loc_avg': 'RQ04 - Tamanho (LOC) vs Qualidade'
     }
     
     correlations = {}
@@ -179,12 +179,12 @@ def create_scatter_plots(df):
     
     quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg']
     
-    # Process metrics by RQ
+    # Process metrics by RQ - in order RQ01-RQ04
     rqs = {
-        'loc_avg': ('RQ04 - Tamanho (LOC)', 'LOC (Lines of Code)'),
         'stars': ('RQ01 - Popularidade (Stars)', 'Stars'),
         'age_years': ('RQ02 - Maturidade (Anos)', 'Age (years)'),
-        'releases': ('RQ03 - Atividade (Releases)', 'Releases')
+        'releases': ('RQ03 - Atividade (Releases)', 'Releases'),
+        'loc_avg': ('RQ04 - Tamanho (LOC)', 'LOC (Lines of Code)')
     }
     
     for process_metric, (rq_title, metric_label) in rqs.items():
@@ -341,8 +341,18 @@ def generate_hypothesis_test_summary(df, correlations):
         rqs_dict[rq_name].append((test_name, results))
     
     # Print results by RQ
+    rq_order = [
+        'RQ01 - Popularidade (Stars) vs Qualidade',
+        'RQ02 - Maturidade (Idade em anos) vs Qualidade',
+        'RQ03 - Atividade (Releases) vs Qualidade',
+        'RQ04 - Tamanho (LOC) vs Qualidade'
+    ]
+    
     total_significant = 0
-    for rq_name in sorted(rqs_dict.keys()):
+    for rq_name in rq_order:
+        if rq_name not in rqs_dict:
+            continue
+            
         print(f"\n{rq_name}")
         print("-" * 80)
         
