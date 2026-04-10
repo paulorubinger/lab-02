@@ -277,6 +277,8 @@ def create_distribution_plots(df):
             ax.hist(data, bins=50, alpha=0.7, edgecolor='black')
             ax.axvline(data.mean(), color='red', linestyle='--', linewidth=2, label=f'Mean: {data.mean():.2f}')
             ax.axvline(data.median(), color='green', linestyle='--', linewidth=2, label=f'Median: {data.median():.2f}')
+            ax.axvspan(data.mean() - data.std(), data.mean() + data.std(),
+                       alpha=0.12, color='red', label=f'Std Dev: {data.std():.2f}')
             
             ax.set_xlabel('Value')
             ax.set_ylabel('Frequency')
