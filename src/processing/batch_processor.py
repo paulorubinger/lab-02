@@ -276,13 +276,8 @@ class BatchProcessor:
                 
                 # Append to consolidated CSV
                 df_new = pd.DataFrame([metrics])
-                if os.path.exists(self.consolidated_csv):
-                    df_existing = pd.read_csv(self.consolidated_csv)
-                    df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-                else:
-                    df_combined = df_new
-                
-                df_combined.to_csv(self.consolidated_csv, index=False)
+                write_header = not os.path.exists(self.consolidated_csv)
+                df_new.to_csv(self.consolidated_csv, mode='a', index=False, header=write_header)
                 print(f"  ✓ Metrics saved")
             except Exception as e:
                 error_msg = str(e)
