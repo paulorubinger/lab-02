@@ -181,7 +181,7 @@ class BatchProcessor:
                 
                 # Aggregate key metrics
                 # Use lcom* (normalized 0-1) instead of lcom (unreliable first version)
-                for metric in ['cbo', 'dit', 'lcom*', 'wmc', 'rfc', 'loc']:
+                for metric in ['cbo', 'dit', 'lcom*', 'loc']:
                     if metric in class_df.columns:
                         valid_values = pd.to_numeric(class_df[metric], errors='coerce').dropna()
                         if len(valid_values) > 0:
