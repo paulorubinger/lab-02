@@ -80,7 +80,7 @@ def calculate_descriptive_stats(df):
     print("="*80)
     
     # Process metrics
-    process_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg', 'loc_avg']
+    process_metrics = ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'wmc_avg', 'rfc_avg', 'loc_avg']
     
     stats_dict = {}
     for metric in process_metrics:
@@ -107,7 +107,7 @@ def calculate_correlations(df):
     print("CORRELATION ANALYSIS - ALL RESEARCH QUESTIONS")
     print("="*80)
     
-    quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg']
+    quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'wmc_avg', 'rfc_avg']
     
     # Define all process metrics (Research Questions) - in order RQ01-RQ04
     process_metrics = {
@@ -177,7 +177,7 @@ def create_scatter_plots(df):
     print("GENERATING SCATTER PLOTS FOR ALL RQs")
     print("="*80)
     
-    quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg']
+    quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'wmc_avg', 'rfc_avg']
     
     # Process metrics by RQ - in order RQ01-RQ04
     rqs = {
@@ -254,7 +254,7 @@ def create_distribution_plots(df):
     """Create distribution plots for quality metrics."""
     print("\nGenerating distribution plots...")
     
-    quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg']
+    quality_metrics = ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'wmc_avg', 'rfc_avg']
     
     fig, axes = plt.subplots(2, 3, figsize=(16, 8))
     fig.suptitle('Distribution of Quality Metrics Across Repositories', 
@@ -292,7 +292,7 @@ def create_correlation_heatmap(df):
     print("\nGenerating correlation heatmap...")
     
     # All available metrics
-    all_metrics = ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg', 'loc_avg', 'stars', 'age_years', 'releases']
+    all_metrics = ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'wmc_avg', 'rfc_avg', 'loc_avg', 'stars', 'age_years', 'releases']
     available_metrics = [m for m in all_metrics if m in df.columns]
     
     if len(available_metrics) < 2:
@@ -388,7 +388,7 @@ def generate_report_section(df, correlations, stats_dict):
     report.append("| Métrica | Média | Mediana | Desvio Padrão | Min | Max |")
     report.append("|---------|-------|---------|---------------|-----|-----|")
     
-    for metric in ['cbo_avg', 'dit_avg', 'lcom_avg', 'wmc_avg', 'rfc_avg']:
+    for metric in ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'wmc_avg', 'rfc_avg']:
         if metric in df.columns:
             data = df[metric].dropna()
             report.append(f"| {metric} | {data.mean():.2f} | {data.median():.2f} | {data.std():.2f} | {data.min():.2f} | {data.max():.2f} |")
@@ -399,7 +399,7 @@ def generate_report_section(df, correlations, stats_dict):
     report.append("- Mean LOC per repository: {:.0f}".format(df['loc_avg'].mean() if 'loc_avg' in df.columns else 0))
     report.append("- Average CBO: {:.2f}".format(df['cbo_avg'].mean() if 'cbo_avg' in df.columns else 0))
     report.append("- Average DIT: {:.2f}".format(df['dit_avg'].mean() if 'dit_avg' in df.columns else 0))
-    report.append("- Average LCOM: {:.2f}".format(df['lcom_avg'].mean() if 'lcom_avg' in df.columns else 0))
+    report.append("- Average LCOM*: {:.4f}".format(df['lcom_star_avg'].mean() if 'lcom_star_avg' in df.columns else 0))
     
     return "\n".join(report)
 

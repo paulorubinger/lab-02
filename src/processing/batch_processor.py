@@ -180,15 +180,17 @@ class BatchProcessor:
                 class_df = pd.read_csv(class_csv)
                 
                 # Aggregate key metrics
-                for metric in ['cbo', 'dit', 'lcom', 'wmc', 'rfc', 'loc']:
+                # Use lcom* (normalized 0-1) instead of lcom (unreliable first version)
+                for metric in ['cbo', 'dit', 'lcom*', 'wmc', 'rfc', 'loc']:
                     if metric in class_df.columns:
                         valid_values = pd.to_numeric(class_df[metric], errors='coerce').dropna()
                         if len(valid_values) > 0:
-                            metrics[f'{metric}_avg'] = valid_values.mean()
-                            metrics[f'{metric}_median'] = valid_values.median()
-                            metrics[f'{metric}_min'] = valid_values.min()
-                            metrics[f'{metric}_max'] = valid_values.max()
-                            metrics[f'{metric}_std'] = valid_values.std()
+                            col = 'lcom_star' if metric == 'lcom*' else metric
+                            metrics[f'{col}_avg'] = valid_values.mean()
+                            metrics[f'{col}_median'] = valid_values.median()
+                            metrics[f'{col}_min'] = valid_values.min()
+                            metrics[f'{col}_max'] = valid_values.max()
+                            metrics[f'{col}_std'] = valid_values.std()
             except:
                 pass
         
@@ -251,9 +253,7 @@ class BatchProcessor:
             os.makedirs(ck_output, exist_ok=True)
             
             result = subprocess.run([
-                "java", "-jar", self.ck_jar, repo_path, "true", "0", "false", ck_output,
-                "src/test/resources"  # Ignore test fixture files (may contain unsupported Java syntax)
-            ], capture_output=True, text=True, timeout=1200)
+                "java", "-jar", self.ck_jar, repo_path, "false", "0", "false", ck_output            ], capture_output=True, text=True, timeout=1200)
             
             if result.returncode != 0:
                 error_msg = result.stderr.strip() if result.stderr else "Unknown error"
