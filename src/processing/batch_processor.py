@@ -253,7 +253,8 @@ class BatchProcessor:
             os.makedirs(ck_output, exist_ok=True)
             
             result = subprocess.run([
-                "java", "-jar", self.ck_jar, repo_path, "false", "0", "false", ck_output            ], capture_output=True, text=True, timeout=1200)
+                "java", "-jar", self.ck_jar, repo_path, "false", "0", "false", ck_output            
+            ], capture_output=True, text=True, timeout=1200)
             
             if result.returncode != 0:
                 error_msg = result.stderr.strip() if result.stderr else "Unknown error"
