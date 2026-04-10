@@ -79,24 +79,30 @@ def calculate_descriptive_stats(df):
     print("DESCRIPTIVE STATISTICS")
     print("="*80)
     
-    # Process metrics
-    process_metrics = ['cbo_avg', 'dit_avg', 'lcom_star_avg', 'loc_avg']
+    all_metrics = {
+        'process': ['stars', 'age_years', 'releases', 'loc_avg'],
+        'quality': ['cbo_avg', 'dit_avg', 'lcom_star_avg'],
+    }
     
-    stats_dict = {}
-    for metric in process_metrics:
-        if metric in df.columns:
-            stats_dict[metric] = {
-                'Mean': df[metric].mean(),
-                'Median': df[metric].median(),
-                'Std Dev': df[metric].std(),
-                'Min': df[metric].min(),
-                'Max': df[metric].max(),
-                'Count': df[metric].count()
-            }
-            
-            print(f"\n{metric.upper()}:")
-            for stat_name, value in stats_dict[metric].items():
-                print(f"  {stat_name:10s}: {value:12.2f}")
+    stats_dict = {'process': {}, 'quality': {}}
+    
+    for group, metrics in all_metrics.items():
+        print(f"\n--- {group.upper()} METRICS ---")
+        for metric in metrics:
+            if metric in df.columns:
+                data = df[metric].dropna()
+                stats_dict[group][metric] = {
+                    'Mean': float(data.mean()),
+                    'Median': float(data.median()),
+                    'Std Dev': float(data.std()),
+                    'Min': float(data.min()),
+                    'Max': float(data.max()),
+                    'Count': int(data.count())
+                }
+                
+                print(f"\n{metric.upper()}:")
+                for stat_name, value in stats_dict[group][metric].items():
+                    print(f"  {stat_name:10s}: {value:12.2f}")
     
     return stats_dict
 
@@ -160,7 +166,7 @@ def calculate_correlations(df):
                 
                 # Interpretation
                 if spearman_p < 0.05:
-                    print(f"    *** SIGNIFICANT at α=0.05 ***")
+                    print(f"    *** SIGNIFICANT at alpha=0.05 ***")
                 if abs(spearman_r) > 0.7:
                     print(f"    *** STRONG correlation (|r| > 0.7) ***")
                 elif abs(spearman_r) > 0.5:
@@ -229,7 +235,7 @@ def create_scatter_plots(df):
                 
                 # Color code by significance
                 if spearman_p < 0.05:
-                    sig_marker = " ✓"
+                    sig_marker = " [SIG]"
                 else:
                     sig_marker = ""
                 
@@ -244,7 +250,8 @@ def create_scatter_plots(df):
         
         # Safe filename
         safe_metric = process_metric.replace('_', '')
-        plot_file = os.path.join(FIGURES_DIR, f"scatter_{safe_metric}_{rq_title.replace(' ', '_').replace('-', '')}.png")
+        rq_code = rq_title.split(' ')[0]
+        plot_file = os.path.join(FIGURES_DIR, f"scatter_{safe_metric}_{rq_code}.png")
         plt.savefig(plot_file, dpi=300, bbox_inches='tight')
         print(f"  Saved: {plot_file}")
         plt.close()
@@ -360,16 +367,16 @@ def generate_hypothesis_test_summary(df, correlations):
             
             sig_marker = ""
             if results['spearman_p'] < alpha_corrected:
-                sig_marker = " ✓ SIGNIFICANT"
+                sig_marker = " [SIG] SIGNIFICANT"
                 rq_significant += 1
                 total_significant += 1
             
             print(f"  {quality_metric:12s}: r={results['spearman_r']:7.4f}, p={results['spearman_p']:.2e}{sig_marker}")
         
-        print(f"  → {rq_significant} significant results in {rq_name}")
+        print(f"  -> {rq_significant} significant results in {rq_name}")
     
     print(f"\n{'='*80}")
-    print(f"TOTAL: {total_significant}/{n_tests} tests significant at Bonferroni-corrected α={alpha_corrected:.6f}")
+    print(f"TOTAL: {total_significant}/{n_tests} tests significant at Bonferroni-corrected alpha={alpha_corrected:.6f}")
 
 
 def generate_report_section(df, correlations, stats_dict):
@@ -379,24 +386,36 @@ def generate_report_section(df, correlations, stats_dict):
     report.append("ANALYSIS RESULTS - TO BE INSERTED IN RELATORIO_FINAL.md")
     report.append("="*80)
     
-    # Descriptive Statistics
-    report.append("\n## 10.1 Estatísticas Descritivas\n")
-    report.append("**Métricas de Qualidade:**\n")
+    n = len(df)
+    report.append(f"\n## 9.1 Estatísticas Descritivas\n")
+    report.append(f"**Métricas de Processo (n = {n}):**\n")
     report.append("| Métrica | Média | Mediana | Desvio Padrão | Min | Max |")
     report.append("|---------|-------|---------|---------------|-----|-----|")
     
-    for metric in ['cbo_avg', 'dit_avg', 'lcom_star_avg']:
-        if metric in df.columns:
-            data = df[metric].dropna()
-            report.append(f"| {metric} | {data.mean():.2f} | {data.median():.2f} | {data.std():.2f} | {data.min():.2f} | {data.max():.2f} |")
+    process_labels = {
+        'stars': 'Stars',
+        'age_years': 'Idade (anos)',
+        'releases': 'Releases',
+        'loc_avg': 'LOC_avg',
+    }
+    for metric, label in process_labels.items():
+        s = stats_dict.get('process', {}).get(metric)
+        if s:
+            report.append(f"| {label} | {s['Mean']:.2f} | {s['Median']:.2f} | {s['Std Dev']:.2f} | {s['Min']:.2f} | {s['Max']:.2f} |")
     
-    # Summary statistics
-    report.append("\n## Key Findings\n")
-    report.append("- Total repositories analyzed: {}".format(len(df)))
-    report.append("- Mean LOC per repository: {:.0f}".format(df['loc_avg'].mean() if 'loc_avg' in df.columns else 0))
-    report.append("- Average CBO: {:.2f}".format(df['cbo_avg'].mean() if 'cbo_avg' in df.columns else 0))
-    report.append("- Average DIT: {:.2f}".format(df['dit_avg'].mean() if 'dit_avg' in df.columns else 0))
-    report.append("- Average LCOM*: {:.4f}".format(df['lcom_star_avg'].mean() if 'lcom_star_avg' in df.columns else 0))
+    report.append(f"\n**Métricas de Qualidade (n = {n}):**\n")
+    report.append("| Métrica | Média | Mediana | Desvio Padrão | Min | Max |")
+    report.append("|---------|-------|---------|---------------|-----|-----|")
+    
+    quality_labels = {
+        'cbo_avg': 'CBO_avg',
+        'dit_avg': 'DIT_avg',
+        'lcom_star_avg': 'LCOM*_avg',
+    }
+    for metric, label in quality_labels.items():
+        s = stats_dict.get('quality', {}).get(metric)
+        if s:
+            report.append(f"| {label} | {s['Mean']:.2f} | {s['Median']:.2f} | {s['Std Dev']:.2f} | {s['Min']:.2f} | {s['Max']:.2f} |")
     
     return "\n".join(report)
 
@@ -436,7 +455,13 @@ def main():
     report_file = os.path.join(REPORTS_DIR, "analysis_results.txt")
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write(report_section)
-    print(f"\n✓ Report section saved: {report_file}")
+    print(f"\n[OK] Report section saved: {report_file}")
+    
+    # Save descriptive stats to JSON
+    stats_json = os.path.join(REPORTS_DIR, "descriptive_stats.json")
+    with open(stats_json, 'w', encoding='utf-8') as f:
+        json.dump(stats_dict, f, indent=2, ensure_ascii=False)
+    print(f"[OK] Descriptive stats saved: {stats_json}")
     
     # Save detailed correlations to JSON
     correlations_json = os.path.join(REPORTS_DIR, "correlations_detailed.json")
@@ -447,7 +472,7 @@ def main():
             corr_json[k] = {key: float(val) if key != 'rq_name' else val 
                            for key, val in v.items()}
         json.dump(corr_json, f, indent=2)
-    print(f"✓ Detailed correlations saved: {correlations_json}")
+    print(f"[OK] Detailed correlations saved: {correlations_json}")
     
     print("\n" + "="*80)
     print("ANALYSIS COMPLETE")

@@ -6,7 +6,7 @@
 
 **Autor:** Paulo Victor Pimenta Rubinger  
 **Data:** 05 de Abril de 2026  
-**Versão do Relatório:** 1.0.3  
+**Versão do Relatório:** 2.0.0  
 **Repositório:** [https://github.com/PauloRubinger/LAB-02](https://github.com/PauloRubinger/LAB-02)  
 **Disciplina:** Laboratório de Experimentação de Software (6º período - Engenharia de Software)  
 **Professor:** João Paulo Carneiro Aramuni
@@ -15,16 +15,14 @@
 
 ## 2. Resumo
 
-Este experimento analisou **975 repositórios Java** da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM).
+Este experimento analisou **974 repositórios Java** da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM).
 
 ### Principais Resultados
-- **975 repositórios (97.5%)** foram analisados com sucesso
-- **Correlações significativas** encontradas entre tamanho do código e acoplamento
-- **Repositórios maiores** tendem a ter **maior complexidade**
-- Taxa de sucesso na coleta: 100% (clone) e 97.5% (análise)
-
-### Decisão Recomendada
-Proceder com análise completa dos dados coletados, utilizando técnicas estatísticas mais avançadas (Spearman, Pearson) para validar as correlações encontradas.
+- **974 repositórios (97.4%)** foram analisados com sucesso
+- **Correlações significativas** encontradas entre tamanho do código e todas as métricas de qualidade
+- **Repositórios maiores** tendem a ter **maior acoplamento e menor coesão**
+- **Atividade (releases)** correlaciona positivamente com piores métricas de qualidade
+- **Popularidade (stars)** não apresenta correlação significativa com qualidade
 
 ---
 
@@ -101,11 +99,11 @@ Coletar via GitHub API:
 Para cada repositório:
 1. Clone com `git clone --depth 1` (apenas último commit na branch default)
 2. Executar ferramenta CK para análise estática
-3. Extrair métricas: CBO, DIT, LCOM, WMC, RFC, LOC
-4. Agregar em nível de repositório (média, máximo, mediana)
+3. Extrair métricas: CBO, DIT, LCOM, LOC
+4. Agregar em nível de repositório (média, mediana, desvio padrão)
 
 #### Fase 4: Processamento e Análise
-1. Limpar dados (outliers, valores ausentes)
+1. Limpar dados (valores ausentes)
 2. Calcular estatísticas descritivas
 3. Realizar testes de correlação
 4. Gerar visualizações
@@ -148,9 +146,9 @@ Para cada repositório:
 |---------|---------|-------|----------------|
 | **CBO** (Coupling Between Objects) | Contagem | 0-∞ | Quantas classes acoplam nesta classe. **Menor = Melhor** |
 | **DIT** (Depth Inheritance Tree) | Níveis | 0-∞ | Profundidade da árvore de herança. **Menor = Melhor** |
-| **LCOM** (Lack of Cohesion of Methods) | % | 0-100 | Falta de coesão entre métodos. **Menor = Melhor** |
+| **LCOM*** (Lack of Cohesion of Methods) | Razão | 0–1 | Falta de coesão entre métodos (normalizada). **Menor = Melhor** |
 
-**Nota:** Para análise em nível de repositório, usamos **média, máximo e mediana** das métricas por classe.
+**Nota:** Utilizamos a versão normalizada LCOM* (0–1), mais confiável que o LCOM original. Para análise em nível de repositório, usamos **média, mediana e desvio padrão** das métricas por classe.
 
 ---
 
@@ -284,9 +282,9 @@ python src/analysis/correlations.py
 
 ```
 Total coletado: 1000 repos
-Sucesso: 975 repos (97.5%)
-Excluído análise: 25 repos (2.5%)
-  - CK failed: 25
+Sucesso: 974 repos (97.4%)
+Excluído análise: 26 repos (2.6%)
+  - CK failed: 26
 ```
 
 ### 8.3 Correção para Múltiplas Comparações
@@ -301,22 +299,22 @@ Excluído análise: 25 repos (2.5%)
 
 ### 9.1 Estatísticas Descritivas
 
-**Métricas de Processo (n = 975):**
+**Métricas de Processo (n = 974):**
 
 | Métrica | Média | Mediana | Desvio Padrão | Min | Max |
 |---------|-------|---------|---------------|-----|-----|
-| Stars | 9.567,91 | 5.790,00 | 11.650,28 | 3.474 | 154.657 |
-| Releases | 40,91 | 11,00 | 89,65 | 0 | 1.000 |
-| Idade (anos) | 10,13 | 10,29 | 3,17 | 0,54 | 17,45 |
-| LOC_avg | 50,86 | 44,22 | 31,42 | 2,00 | 406,33 |
+| Stars | 9.442,41 | 5.786,50 | 10.714,38 | 3.473 | 125.017 |
+| Releases | 41,01 | 11,00 | 89,95 | 0 | 1.000 |
+| Idade (anos) | 10,14 | 10,31 | 3,18 | 0,56 | 17,47 |
+| LOC_avg | 50,93 | 44,23 | 31,45 | 2,00 | 406,33 |
 
-**Métricas de Qualidade (n = 975):**
+**Métricas de Qualidade (n = 974):**
 
 | Métrica | Média | Mediana | Desvio Padrão | Min | Max |
 |---------|-------|---------|---------------|-----|-----|
-| CBO_avg | 5,37 | 5,33 | 1,87 | 0,00 | 21,89 |
+| CBO_avg | 5,38 | 5,33 | 1,87 | 0,00 | 21,89 |
 | DIT_avg | 1,46 | 1,39 | 0,35 | 1,00 | 4,39 |
-| LCOM_avg | 118,61 | 24,57 | 1.738,92 | 0,00 | 54.025,11 |
+| LCOM*_avg | 0,24 | 0,25 | 0,09 | 0,00 | 0,75 |
 
 ### 9.2 Resultados por Questão de Pesquisa
 
@@ -324,11 +322,11 @@ Excluído análise: 25 repos (2.5%)
 
 | Correlação | Spearman r | p-valor | Significância |
 |-----------|------------|---------|---------------|
-| Stars vs CBO_avg | 0,0265 | 4,09e-01 | Não significativo |
-| Stars vs DIT_avg | -0,0495 | 1,23e-01 | Não significativo |
-| Stars vs LCOM_avg | 0,0543 | 8,99e-02 | Não significativo |
+| Stars vs CBO_avg | 0,0273 | 3,94e-01 | Não significativo |
+| Stars vs DIT_avg | −0,0439 | 1,71e-01 | Não significativo |
+| Stars vs LCOM*_avg | −0,0093 | 7,72e-01 | Não significativo |
 
-**Hipótese H1:** Repositórios mais populares devem ter melhor qualidade (menor CBO, DIT, LCOM).
+**Hipótese H1:** Repositórios mais populares devem ter melhor qualidade (menor CBO, DIT, LCOM*).
 
 **Resultado:** **H1 rejeitada.** Não foram encontradas correlações estatisticamente significativas entre popularidade (stars) e nenhuma das métricas de qualidade (p > 0,05 em todos os casos). A popularidade de um repositório no GitHub não é um indicador de qualidade interna do código.
 
@@ -336,37 +334,37 @@ Excluído análise: 25 repos (2.5%)
 
 | Correlação | Spearman r | p-valor | Significância |
 |-----------|------------|---------|---------------|
-| Idade vs CBO_avg | 0,0074 | 8,16e-01 | Não significativo |
-| Idade vs DIT_avg | 0,2876 | 5,10e-20 | Significativo (p < 0,001) |
-| Idade vs LCOM_avg | 0,1949 | 8,33e-10 | Significativo (p < 0,001) |
+| Idade vs CBO_avg | 0,0051 | 8,73e-01 | Não significativo |
+| Idade vs DIT_avg | 0,2857 | 9,56e-20 | Significativo (p < 0,001) |
+| Idade vs LCOM*_avg | 0,0010 | 9,75e-01 | Não significativo |
 
 **Hipótese H2:** Repositórios mais maduros devem ter melhor qualidade (refatoração ao longo do tempo).
 
-**Resultado:** **H2 parcialmente rejeitada.** A maturidade não mostrou correlação significativa com CBO (acoplamento). Porém, repositórios mais antigos apresentam maior DIT (r=0,29) e maior LCOM (r=0,19), ambos com alta significância estatística. Isso sugere que projetos mais antigos tendem a acumular herança mais profunda e menor coesão, contrariando a hipótese de melhoria com o tempo.
+**Resultado:** **H2 parcialmente rejeitada.** A maturidade não mostrou correlação significativa com CBO (acoplamento) nem com LCOM* (coesão). Porém, repositórios mais antigos apresentam maior DIT (r=0,29, p < 0,001), sugerindo que projetos mais antigos tendem a acumular herança mais profunda. A ausência de correlação com LCOM* indica que a coesão não se degrada necessariamente com o tempo.
 
 #### RQ03: Atividade vs. Qualidade
 
 | Correlação | Spearman r | p-valor | Significância |
 |-----------|------------|---------|---------------|
-| Releases vs CBO_avg | 0,3972 | 3,34e-38 | Significativo (p < 0,001) |
-| Releases vs DIT_avg | 0,2078 | 5,74e-11 | Significativo (p < 0,001) |
-| Releases vs LCOM_avg | 0,3258 | 1,53e-25 | Significativo (p < 0,001) |
+| Releases vs CBO_avg | 0,3997 | 1,16e-38 | Significativo (p < 0,001) |
+| Releases vs DIT_avg | 0,2095 | 4,03e-11 | Significativo (p < 0,001) |
+| Releases vs LCOM*_avg | 0,1847 | 6,36e-09 | Significativo (p < 0,001) |
 
 **Hipótese H3:** Repositórios com mais releases devem ter melhor qualidade (maior atividade = melhor manutenção).
 
-**Resultado:** **H3 rejeitada.** Todas as correlações são positivas e altamente significativas, indicando que projetos com mais releases apresentam **pior** qualidade interna: maior acoplamento (CBO, r=0,40), herança mais profunda (DIT, r=0,21) e menor coesão (LCOM, r=0,33). Isso pode refletir que projetos mais ativos são também maiores e mais complexos.
+**Resultado:** **H3 rejeitada.** Todas as correlações são positivas e altamente significativas, indicando que projetos com mais releases apresentam **pior** qualidade interna: maior acoplamento (CBO, r=0,40), herança mais profunda (DIT, r=0,21) e menor coesão (LCOM*, r=0,18). Isso pode refletir que projetos mais ativos são também maiores e mais complexos.
 
 #### RQ04: Tamanho vs. Qualidade
 
 | Correlação | Spearman r | p-valor | Significância |
 |-----------|------------|---------|---------------|
-| LOC_avg vs CBO_avg | 0,4249 | 5,09e-44 | Significativo (p < 0,001) |
-| LOC_avg vs DIT_avg | 0,3737 | 1,12e-33 | Significativo (p < 0,001) |
-| LOC_avg vs LCOM_avg | 0,7312 | 8,20e-164 | Significativo (p < 0,001) |
+| LOC_avg vs CBO_avg | 0,4257 | 3,76e-44 | Significativo (p < 0,001) |
+| LOC_avg vs DIT_avg | 0,3748 | 7,54e-34 | Significativo (p < 0,001) |
+| LOC_avg vs LCOM*_avg | 0,5930 | 1,48e-93 | Significativo (p < 0,001) |
 
 **Hipótese H4:** Repositórios maiores terão pior qualidade (maior LOC correlaciona com maior complexidade).
 
-**Resultado:** **H4 confirmada.** Todas as correlações são positivas e altamente significativas. A correlação mais forte é entre LOC e LCOM (r=0,73 — forte), seguida de LOC e CBO (r=0,42 — moderada) e LOC e DIT (r=0,37 — moderada). Classes maiores apresentam consistentemente pior coesão, maior acoplamento e herança mais profunda.
+**Resultado:** **H4 confirmada.** Todas as correlações são positivas e altamente significativas. A correlação mais forte é entre LOC e LCOM* (r=0,59 — moderada a forte), seguida de LOC e CBO (r=0,43 — moderada) e LOC e DIT (r=0,37 — moderada). Classes maiores apresentam consistentemente pior coesão, maior acoplamento e herança mais profunda.
 
 ### 9.3 Gráficos Principais
 
@@ -374,19 +372,65 @@ Excluído análise: 25 repos (2.5%)
 
 ![Distribuição das Métricas de Qualidade](figures/distributions.png)
 
-As distribuições revelam que CBO, WMC e RFC apresentam distribuição assimétrica à direita, com a maioria dos repositórios concentrada em valores baixos. LCOM apresenta distribuição extremamente assimétrica, com média (118,61) muito superior à mediana (24,57), indicando presença de outliers significativos.
+As distribuições revelam que CBO apresenta distribuição assimétrica à direita, com a maioria dos repositórios concentrada em valores baixos. DIT é fortemente concentrada próxima de 1, indicando que a maioria dos projetos utiliza pouca herança. LCOM* distribui-se de forma relativamente uniforme entre 0 e 0,5, com poucos repositórios acima de 0,6.
 
 #### Correlações: LOC_avg vs Métricas de Qualidade
 
 ![Correlações LOC_avg vs Qualidade](figures/correlations_scatter.png)
 
-Os scatter plots evidenciam a relação positiva entre tamanho do código (LOC) e as métricas de qualidade. A correlação mais forte é entre LOC e WMC (Spearman r=0,945), seguida de LOC e RFC (r=0,790) e LOC e LCOM (r=0,731).
+Os scatter plots evidenciam a relação positiva entre tamanho do código (LOC) e as métricas de qualidade. A correlação mais forte é entre LOC e LCOM* (Spearman r=0,59), seguida de LOC e CBO (r=0,43) e LOC e DIT (r=0,38).
+
+---
+
+## 10. Discussão
+
+### 10.1 Comparação entre Hipóteses e Resultados
+
+| Hipótese | Expectativa | Resultado | Veredito |
+|----------|------------|-----------|----------|
+| **H1** (Popularidade → Qualidade) | Mais stars = melhor qualidade | Nenhuma correlação significativa | **Rejeitada** |
+| **H2** (Maturidade → Qualidade) | Mais antigo = melhor qualidade | Apenas DIT aumenta com idade | **Parcialmente rejeitada** |
+| **H3** (Atividade → Qualidade) | Mais releases = melhor qualidade | Mais releases = pior qualidade | **Rejeitada** |
+| **H4** (Tamanho → Qualidade) | Maior LOC = pior qualidade | Todas as métricas pioram com LOC | **Confirmada** |
+
+### 10.2 Interpretação dos Resultados
+
+**Popularidade não indica qualidade (RQ01).** O número de estrelas reflete interesse da comunidade, utilidade percebida ou marketing do projeto — não a qualidade interna do código. Isso é consistente com a literatura, que sugere que stars medem popularidade social, não excelência técnica.
+
+**Maturidade tem efeito limitado (RQ02).** A única correlação significativa foi entre idade e DIT (r=0,29). Projetos mais antigos acumulam hierarquias de herança mais profundas ao longo do tempo, possivelmente por extensões incrementais via subclasses. A ausência de correlação com CBO e LCOM* sugere que acoplamento e coesão são mais influenciados por decisões de design do que pelo tempo de existência do projeto.
+
+**Atividade correlaciona com complexidade, não com qualidade (RQ03).** Projetos com mais releases tendem a ser maiores e mais complexos, o que explica as correlações positivas com CBO (r=0,40), DIT (r=0,21) e LCOM* (r=0,18). A hipótese de que mais releases implicaria melhor manutenção não se confirmou — provavelmente porque projetos ativos crescem em escopo, aumentando a complexidade estrutural.
+
+**Tamanho é o melhor preditor de qualidade (RQ04).** LOC apresentou as correlações mais fortes e consistentes: LCOM* (r=0,59), CBO (r=0,43) e DIT (r=0,37). Classes maiores tendem a acumular mais responsabilidades (baixa coesão), mais dependências (alto acoplamento) e hierarquias mais profundas. Este resultado reforça o princípio do Single Responsibility e a importância de manter classes pequenas.
+
+### 10.3 Limitações
+
+1. **Snapshot único:** Os dados representam o estado dos repositórios em abril de 2026, sem análise temporal.
+2. **Métricas agregadas:** Utilizamos médias por repositório, o que pode mascarar variações entre classes individuais.
+3. **LCOM* normalizado:** Embora mais confiável que o LCOM original, a versão normalizada pode perder nuances em projetos muito grandes.
+4. **26 repositórios excluídos:** 2,6% dos repositórios falharam na análise CK, potencialmente introduzindo viés de seleção.
+5. **Causalidade:** Correlações não implicam causalidade — não podemos afirmar que LOC *causa* pior qualidade, apenas que estão associados.
+
+---
+
+## 11. Conclusão
+
+Este estudo analisou 974 dos 1.000 repositórios Java mais populares do GitHub, investigando a relação entre métricas de processo (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM*).
+
+Os principais achados são:
+
+1. **Tamanho do código (LOC) é o fator mais associado à qualidade interna**, com correlações moderadas a fortes com todas as métricas de qualidade analisadas.
+2. **Atividade (releases) também se associa a piores métricas**, possivelmente como efeito indireto do crescimento do projeto.
+3. **Popularidade (stars) não é um indicador confiável de qualidade de código.**
+4. **Maturidade tem efeito limitado**, afetando apenas a profundidade de herança (DIT).
+
+Para projetos que buscam manter boa qualidade interna, os resultados reforçam a importância de manter classes pequenas e focadas, independentemente da popularidade ou idade do repositório.
 
 #### Matriz de Correlação de Spearman
 
 ![Matriz de Correlação](figures/correlation_heatmap.png)
 
-A matriz de correlação mostra que todas as métricas de qualidade estão positivamente correlacionadas entre si, com destaque para WMC-LOC (r=0,945) e WMC-LCOM (r=0,754). Isso sugere que a degradação de qualidade tende a ocorrer simultaneamente em múltiplas dimensões.
+A matriz de correlação mostra que todas as métricas de qualidade estão positivamente correlacionadas entre si, com destaque para LOC-LCOM* (r=0,59) e LOC-CBO (r=0,43). Isso sugere que a degradação de qualidade tende a ocorrer simultaneamente em múltiplas dimensões.
 
 ---
 
@@ -396,10 +440,10 @@ A matriz de correlação mostra que todas as métricas de qualidade estão posit
 
 | Hipótese | Resultado | Justificativa |
 |----------|-----------|---------------|
-| **H1**: Repos populares têm melhor qualidade | **Rejeitada** | Nenhuma correlação significativa entre stars e CBO, DIT ou LCOM (p > 0,05) |
-| **H2**: Repos mais maduros têm melhor qualidade | **Parcialmente rejeitada** | Sem correlação com CBO, mas correlação positiva com DIT (r=0,29) e LCOM (r=0,19) — repos mais antigos têm *pior* qualidade |
-| **H3**: Mais releases = melhor qualidade | **Rejeitada** | Correlações positivas significativas com CBO (r=0,40), DIT (r=0,21) e LCOM (r=0,33) — mais atividade = *pior* qualidade |
-| **H4**: Repos maiores têm pior qualidade | **Confirmada** | Forte correlação LOC-LCOM (r=0,73), moderada LOC-CBO (r=0,42) e LOC-DIT (r=0,37) |
+| **H1**: Repos populares têm melhor qualidade | **Rejeitada** | Nenhuma correlação significativa entre stars e CBO, DIT ou LCOM* (p > 0,05) |
+| **H2**: Repos mais maduros têm melhor qualidade | **Parcialmente rejeitada** | Sem correlação com CBO ou LCOM*, mas correlação positiva com DIT (r=0,29) — repos mais antigos têm herança mais profunda |
+| **H3**: Mais releases = melhor qualidade | **Rejeitada** | Correlações positivas significativas com CBO (r=0,40), DIT (r=0,21) e LCOM* (r=0,18) — mais atividade = *pior* qualidade |
+| **H4**: Repos maiores têm pior qualidade | **Confirmada** | Correlação moderada-forte LOC-LCOM* (r=0,59), moderada LOC-CBO (r=0,43) e LOC-DIT (r=0,37) |
 
 ### 10.2 Limitações (Ameaças à Validade)
 
@@ -422,13 +466,13 @@ A matriz de correlação mostra que todas as métricas de qualidade estão posit
 
 1. **Popularidade não é proxy de qualidade:** A quantidade de estrelas no GitHub não tem relação estatística com as métricas de qualidade interna do código. Projetos populares podem ter código bom ou ruim indistintamente.
 
-2. **Tamanho é o principal preditor de degradação:** LOC apresentou as correlações mais fortes e consistentes com todas as métricas de qualidade (Spearman r entre 0,37 e 0,73), confirmando que classes maiores degradam sistematicamente em coesão, acoplamento e profundidade de herança.
+2. **Tamanho é o principal preditor de degradação:** LOC apresentou as correlações mais fortes e consistentes com todas as métricas de qualidade (Spearman r entre 0,37 e 0,59), confirmando que classes maiores degradam sistematicamente em coesão, acoplamento e profundidade de herança.
 
-3. **LCOM tem distribuição extremamente assimétrica:** A média (118,61) é quase 5x a mediana (24,57), indicando que poucos repositórios têm valores de LCOM muito altos, puxando a média significativamente.
+3. **LCOM* tem distribuição relativamente uniforme:** A média (0,24) e a mediana (0,25) são próximas, indicando distribuição simétrica sem outliers extremos — ao contrário do LCOM original, que era altamente assimétrico.
 
-4. **Atividade e maturidade correlacionam com pior qualidade:** Contrariando as hipóteses iniciais, projetos mais ativos (mais releases) e mais antigos tendem a ter pior qualidade, possivelmente devido ao acúmulo de débito técnico ao longo do tempo.
+4. **Atividade e maturidade correlacionam com pior qualidade:** Contrariando as hipóteses iniciais, projetos mais ativos (mais releases) e mais antigos tendem a ter herança mais profunda e maior acoplamento, possivelmente devido ao crescimento do escopo ao longo do tempo.
 
-5. **Métricas de qualidade são intercorrelacionadas:** A matriz de correlação mostra que WMC, RFC, LCOM e CBO se correlacionam positivamente, sugerindo que a degradação ocorre simultaneamente em múltiplas dimensões.
+5. **Métricas de qualidade são intercorrelacionadas:** A matriz de correlação mostra que LCOM*, CBO e DIT se correlacionam positivamente, sugerindo que a degradação ocorre simultaneamente em múltiplas dimensões.
 
 ---
 
@@ -436,15 +480,15 @@ A matriz de correlação mostra que todas as métricas de qualidade estão posit
 
 ### 11.1 Findings Principais
 
-Com base na análise de **975 repositórios Java** populares do GitHub:
+Com base na análise de **974 repositórios Java** populares do GitHub:
 
 1. **RQ01 — Popularidade vs. Qualidade:** Não há correlação significativa. A popularidade (stars) não prediz a qualidade interna do código.
 
-2. **RQ02 — Maturidade vs. Qualidade:** Repositórios mais antigos apresentam herança mais profunda (DIT, r=0,29) e menor coesão (LCOM, r=0,19), mas sem impacto no acoplamento (CBO).
+2. **RQ02 — Maturidade vs. Qualidade:** Repositórios mais antigos apresentam herança mais profunda (DIT, r=0,29), mas sem impacto significativo no acoplamento (CBO) ou coesão (LCOM*).
 
-3. **RQ03 — Atividade vs. Qualidade:** Projetos com mais releases têm pior qualidade em todas as métricas (CBO r=0,40; DIT r=0,21; LCOM r=0,33), sugerindo acúmulo de débito técnico.
+3. **RQ03 — Atividade vs. Qualidade:** Projetos com mais releases têm pior qualidade em todas as métricas (CBO r=0,40; DIT r=0,21; LCOM* r=0,18), sugerindo crescimento de complexidade com a atividade.
 
-4. **RQ04 — Tamanho vs. Qualidade:** O tamanho do código (LOC) é o preditor mais forte de degradação da qualidade, com correlação forte com LCOM (r=0,73) e moderada com CBO (r=0,42) e DIT (r=0,37).
+4. **RQ04 — Tamanho vs. Qualidade:** O tamanho do código (LOC) é o preditor mais forte de degradação da qualidade, com correlação moderada-forte com LCOM* (r=0,59) e moderada com CBO (r=0,43) e DIT (r=0,37).
 
 **Conclusão geral:** O tamanho das classes é o fator dominante na qualidade do código Java. Projetos devem priorizar classes menores e mais coesas para manter bons indicadores de qualidade interna.
 
@@ -515,25 +559,23 @@ batch_size: 1 repo por vez (para economizar armazenamento em disco)
 Total attempted: 1000
 Clone successful: 1000 (100%)
 Clone failed: 0 (0%)
-Analysis successful: 975 (97.5%)
-Analysis failed: 25 (2.5%)
+Analysis successful: 974 (97.4%)
+Analysis failed: 26 (2.6%)
 ```
 
 **Matriz de falhas:**
 
 | Tipo de Falha | Contagem | Repositórios Afetados |
 |---------------|----------|---------------------|
-| CK NullPointerException | 11 | elastic_elasticsearch, dbeaver_dbeaver, oracle_graal, thingsboard_thingsboard, questdb_questdb, Grasscutters_Grasscutter, neo4j_neo4j, projectlombok_lombok, trinodb_trino, haifengl_smile, JabRef_jabref |
-| CK IllegalStateException | 2 | NationalSecurityAgency_ghidra, Anuken_Mindustry |
-| CK IOException | 1 | JetBrains_intellij-community |
+| CK NullPointerException | 12 | elastic_elasticsearch, NationalSecurityAgency_ghidra, dbeaver_dbeaver, oracle_graal, thingsboard_thingsboard, questdb_questdb, Grasscutters_Grasscutter, neo4j_neo4j, projectlombok_lombok, trinodb_trino, haifengl_smile, JabRef_jabref |
+| CK IOException | 3 | JetBrains_intellij-community, checkstyle_checkstyle, dragonwell-project_dragonwell8 |
 | CK Runtime Warning/Error | 1 | openjdk_jdk |
-| CK EmptyStackException | 1 | dragonwell-project_dragonwell8 |
 | CK ArrayIndexOutOfBoundsException | 1 | google_j2objc |
-| Metrics Extraction Empty | 8 | hollischuang_toBeTopJavaer, frank-lam_fullstack-tutorial, react-native-camera_react-native-camera, CoderLeixiaoshuai_java-eight-part, Archmage83_tvapk, RedSpider1_concurrent, jlegewie_zotfile, NotFound9_interviewGuide |
+| Metrics Extraction Empty | 9 | Snailclimb_JavaGuide, hollischuang_toBeTopJavaer, frank-lam_fullstack-tutorial, react-native-camera_react-native-camera, CoderLeixiaoshuai_java-eight-part, Archmage83_tvapk, RedSpider1_concurrent, jlegewie_zotfile, NotFound9_interviewGuide |
 
 ### C. Dados Brutos
 
-[Ver arquivo: `data/processed/consolidated_metrics.csv` com 975 repositórios e 19 colunas de métricas]
+[Ver arquivo: `data/processed/consolidated_metrics.csv` com 974 repositórios e 21 colunas de métricas]
 
 ---
 
@@ -543,4 +585,4 @@ Analysis failed: 25 (2.5%)
 
 ---
 
-**Versão:** 1.0.3 | **Data:** 09/04/2026 | **Status:** Revisado
+**Versão:** 2.0.0 | **Data:** 10/04/2026 | **Status:** Revisado
