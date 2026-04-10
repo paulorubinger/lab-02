@@ -12,8 +12,6 @@ ANALYSIS RESULTS - TO BE INSERTED IN RELATORIO_FINAL.md
 | cbo_avg | 5.38 | 5.33 | 1.87 | 0.00 | 21.89 |
 | dit_avg | 1.46 | 1.39 | 0.35 | 1.00 | 4.39 |
 | lcom_star_avg | 0.24 | 0.25 | 0.09 | 0.00 | 0.75 |
-| wmc_avg | 10.39 | 8.90 | 7.33 | 0.00 | 99.67 |
-| rfc_avg | 10.24 | 9.57 | 5.08 | 0.00 | 64.67 |
 
 ## Key Findings
 
