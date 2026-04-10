@@ -1,162 +1,162 @@
 {
   "stars vs cbo_avg": {
     "rq_name": "RQ01 - Popularidade (Stars) vs Qualidade",
-    "spearman_r": 0.02841199196327213,
-    "spearman_p": 0.3759984774508938,
-    "pearson_r": -0.12659388125330812,
-    "pearson_p": 7.504364602281109e-05,
-    "n": 973.0
+    "spearman_r": 0.02734182028064073,
+    "spearman_p": 0.39400669760134266,
+    "pearson_r": -0.12704660166232018,
+    "pearson_p": 7.007703199432367e-05,
+    "n": 974.0
   },
   "stars vs dit_avg": {
     "rq_name": "RQ01 - Popularidade (Stars) vs Qualidade",
-    "spearman_r": -0.04513770066010102,
-    "spearman_p": 0.15946144631714584,
-    "pearson_r": -0.1144100137199094,
-    "pearson_p": 0.0003489635673981425,
-    "n": 973.0
+    "spearman_r": -0.04389734191076035,
+    "spearman_p": 0.1710331607444524,
+    "pearson_r": -0.1137113668354952,
+    "pearson_p": 0.00037683517404426046,
+    "n": 974.0
   },
   "stars vs lcom_star_avg": {
     "rq_name": "RQ01 - Popularidade (Stars) vs Qualidade",
-    "spearman_r": -0.008821437499909067,
-    "spearman_p": 0.7834558566736857,
-    "pearson_r": -0.12171283451101071,
-    "pearson_p": 0.0001413126339226826,
-    "n": 973.0
+    "spearman_r": -0.009293419805212047,
+    "spearman_p": 0.7720672569535525,
+    "pearson_r": -0.12188327127837642,
+    "pearson_p": 0.0001371834966413595,
+    "n": 974.0
   },
   "stars vs wmc_avg": {
     "rq_name": "RQ01 - Popularidade (Stars) vs Qualidade",
-    "spearman_r": 0.035768826139085066,
-    "spearman_p": 0.26499717593873723,
-    "pearson_r": -0.044664951194320755,
-    "pearson_p": 0.16388141576122064,
-    "n": 973.0
+    "spearman_r": 0.03704070907871558,
+    "spearman_p": 0.24812549355168406,
+    "pearson_r": -0.044185508501798275,
+    "pearson_p": 0.16823832481414716,
+    "n": 974.0
   },
   "stars vs rfc_avg": {
     "rq_name": "RQ01 - Popularidade (Stars) vs Qualidade",
-    "spearman_r": 0.03303347164672699,
-    "spearman_p": 0.3033068979048603,
-    "pearson_r": -0.08546114310219498,
-    "pearson_p": 0.007647721635975032,
-    "n": 973.0
+    "spearman_r": 0.033565888825657926,
+    "spearman_p": 0.29532719281540376,
+    "pearson_r": -0.08512649630497052,
+    "pearson_p": 0.007857670780242946,
+    "n": 974.0
   },
   "age_years vs cbo_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.0048286792643763956,
-    "spearman_p": 0.8804269495590819,
-    "pearson_r": 0.010218549211335604,
-    "pearson_p": 0.7502230615271378,
-    "n": 973.0
+    "spearman_r": 0.005142698264949009,
+    "spearman_p": 0.8726500431535844,
+    "pearson_r": 0.010338810404464943,
+    "pearson_p": 0.7472573034674581,
+    "n": 974.0
   },
   "age_years vs dit_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.28635859633459493,
-    "spearman_p": 8.059035568585906e-20,
-    "pearson_r": 0.19157014684931725,
-    "pearson_p": 1.7033531151630543e-09,
-    "n": 973.0
+    "spearman_r": 0.28567144101716924,
+    "spearman_p": 9.524904871363776e-20,
+    "pearson_r": 0.19142356493276053,
+    "pearson_p": 1.7202407170655259e-09,
+    "n": 974.0
   },
   "age_years vs lcom_star_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.0009226261043846464,
-    "spearman_p": 0.9770700083305848,
-    "pearson_r": 0.01129965958189702,
-    "pearson_p": 0.7248173761832051,
-    "n": 973.0
+    "spearman_r": 0.0010493087618872695,
+    "spearman_p": 0.9739091942261563,
+    "pearson_r": 0.011370785620294007,
+    "pearson_p": 0.7230194264616253,
+    "n": 974.0
   },
   "age_years vs wmc_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.14427382199916491,
-    "spearman_p": 6.236792107237635e-06,
-    "pearson_r": 0.04233359180916636,
-    "pearson_p": 0.1870342265782004,
-    "n": 973.0
+    "spearman_r": 0.14357391247172552,
+    "spearman_p": 6.8478018282266814e-06,
+    "pearson_r": 0.04223743850693305,
+    "pearson_p": 0.18781109363218884,
+    "n": 974.0
   },
   "age_years vs rfc_avg": {
     "rq_name": "RQ02 - Maturidade (Idade em anos) vs Qualidade",
-    "spearman_r": 0.09522772220077622,
-    "spearman_p": 0.0029454490823247388,
-    "pearson_r": 0.019952833159831672,
-    "pearson_p": 0.5341723487995724,
-    "n": 973.0
+    "spearman_r": 0.09486282237996728,
+    "spearman_p": 0.0030420685569982767,
+    "pearson_r": 0.01989498411479247,
+    "pearson_p": 0.5351484466055894,
+    "n": 974.0
   },
   "releases vs cbo_avg": {
     "rq_name": "RQ03 - Atividade (Releases) vs Qualidade",
-    "spearman_r": 0.40127212252211925,
-    "spearman_p": 6.082215165101203e-39,
-    "pearson_r": 0.21512947083901318,
-    "pearson_p": 1.1897403977733756e-11,
-    "n": 973.0
+    "spearman_r": 0.399696837330968,
+    "spearman_p": 1.1603578196400018e-38,
+    "pearson_r": 0.21421876098259315,
+    "pearson_p": 1.4230901044357057e-11,
+    "n": 974.0
   },
   "releases vs dit_avg": {
     "rq_name": "RQ03 - Atividade (Releases) vs Qualidade",
-    "spearman_r": 0.20877250985848733,
-    "spearman_p": 4.817859507903129e-11,
-    "pearson_r": 0.052844387513995936,
-    "pearson_p": 0.09947493585007143,
-    "n": 973.0
+    "spearman_r": 0.20949506224659262,
+    "spearman_p": 4.0254983385711584e-11,
+    "pearson_r": 0.05328384406376346,
+    "pearson_p": 0.09651690961345552,
+    "n": 974.0
   },
   "releases vs lcom_star_avg": {
     "rq_name": "RQ03 - Atividade (Releases) vs Qualidade",
-    "spearman_r": 0.1855202059382848,
-    "spearman_p": 5.537224177788376e-09,
-    "pearson_r": 0.06537205443638143,
-    "pearson_p": 0.04147928974711629,
-    "n": 973.0
+    "spearman_r": 0.1847060420886125,
+    "spearman_p": 6.35568510841665e-09,
+    "pearson_r": 0.06495462715623697,
+    "pearson_p": 0.04269263066108671,
+    "n": 974.0
   },
   "releases vs wmc_avg": {
     "rq_name": "RQ03 - Atividade (Releases) vs Qualidade",
-    "spearman_r": 0.2610381666638106,
-    "spearman_p": 1.2739496861465474e-16,
-    "pearson_r": 0.04368230926913618,
-    "pearson_p": 0.17336256567905134,
-    "n": 973.0
+    "spearman_r": 0.2618144878631259,
+    "spearman_p": 9.917433433347279e-17,
+    "pearson_r": 0.04402301624593335,
+    "pearson_p": 0.16981004616476772,
+    "n": 974.0
   },
   "releases vs rfc_avg": {
     "rq_name": "RQ03 - Atividade (Releases) vs Qualidade",
-    "spearman_r": 0.3953607739432903,
-    "spearman_p": 9.345696506159207e-38,
-    "pearson_r": 0.16624628010311338,
-    "pearson_p": 1.834417587772505e-07,
-    "n": 973.0
+    "spearman_r": 0.3954125806287537,
+    "spearman_p": 8.378703201462212e-38,
+    "pearson_r": 0.1662338321449792,
+    "pearson_p": 1.8118884453364985e-07,
+    "n": 974.0
   },
   "loc_avg vs cbo_avg": {
     "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.4266430451703928,
-    "spearman_p": 2.580115076092823e-44,
-    "pearson_r": 0.4001433611424117,
-    "pearson_p": 1.0291776624324741e-38,
-    "n": 973.0
+    "spearman_r": 0.42570303346935895,
+    "spearman_p": 3.7616325381193533e-44,
+    "pearson_r": 0.39990843067985055,
+    "pearson_p": 1.0516233546437606e-38,
+    "n": 974.0
   },
   "loc_avg vs dit_avg": {
     "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.37448007728481003,
-    "spearman_p": 9.405651137874211e-34,
-    "pearson_r": 0.20313655925192817,
-    "pearson_p": 1.6047060915906823e-10,
-    "n": 973.0
+    "spearman_r": 0.37482171351519683,
+    "spearman_p": 7.5355427063658145e-34,
+    "pearson_r": 0.20324576877200837,
+    "pearson_p": 1.534748968099106e-10,
+    "n": 974.0
   },
   "loc_avg vs lcom_star_avg": {
     "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.5936784038558743,
-    "spearman_p": 1.0132677705110896e-93,
-    "pearson_r": 0.5554905443806389,
-    "pearson_p": 7.250794075009623e-80,
-    "n": 973.0
+    "spearman_r": 0.5930092016957429,
+    "spearman_p": 1.4801737777707568e-93,
+    "pearson_r": 0.5553353932795472,
+    "pearson_p": 6.803962558674377e-80,
+    "n": 974.0
   },
   "loc_avg vs wmc_avg": {
     "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.9447785984346873,
+    "spearman_r": 0.9447930120333851,
     "spearman_p": 0.0,
-    "pearson_r": 0.9331841655023343,
+    "pearson_r": 0.9331743579581572,
     "pearson_p": 0.0,
-    "n": 973.0
+    "n": 974.0
   },
   "loc_avg vs rfc_avg": {
     "rq_name": "RQ04 - Tamanho (LOC) vs Qualidade",
-    "spearman_r": 0.789849201077992,
-    "spearman_p": 2.1958920093439376e-208,
-    "pearson_r": 0.7374081998834637,
-    "pearson_p": 1.1843953960170584e-167,
-    "n": 973.0
+    "spearman_r": 0.7897041321794604,
+    "spearman_p": 1.8100243061845448e-208,
+    "pearson_r": 0.737387115333912,
+    "pearson_p": 8.265380905901604e-168,
+    "n": 974.0
   }
 }
