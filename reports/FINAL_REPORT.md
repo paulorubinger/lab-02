@@ -2,8 +2,8 @@
 
 **Autor:** Paulo Victor Pimenta Rubinger  
 **Data:** 05 de Abril de 2026  
-**Versão do Relatório:** 3.0.0  
-**Repositório:** [https://github.com/PauloRubinger/LAB-02](https://github.com/PauloRubinger/LAB-02)  
+**Versão do Relatório:** 3.0.1  
+**Repositório:** [https://github.com/PauloRubinger/lab-02](https://github.com/PauloRubinger/lab-02)  
 **Disciplina:** Laboratório de Experimentação de Software (6º período — Engenharia de Software)  
 **Professor:** João Paulo Carneiro Aramuni
 
@@ -11,7 +11,7 @@
 
 ## Resumo
 
-Este experimento analisou **974 repositórios Java** da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM*).
+Este experimento analisou **974 repositórios Java** da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código: **CBO** (*Coupling Between Objects* — acoplamento entre objetos), **DIT** (*Depth of Inheritance Tree* — profundidade da árvore de herança) e **LCOM*** (*Lack of Cohesion of Methods* — falta de coesão entre métodos, versão normalizada).
 
 **Principais Resultados:**
 
@@ -233,9 +233,9 @@ A Figura 1 apresenta os histogramas de distribuição das três métricas de qua
 
 | Correlação | Spearman ρ | p-valor | Significância |
 |-----------|------------|---------|---------------|
-| Stars vs CBO_avg | 0,0273 | 3,94e-01 | Não significativo |
-| Stars vs DIT_avg | −0,0439 | 1,71e-01 | Não significativo |
-| Stars vs LCOM*_avg | −0,0093 | 7,72e-01 | Não significativo |
+| Stars vs CBO_avg | 0,0273 | 0,394 | Não significativo |
+| Stars vs DIT_avg | −0,0439 | 0,171 | Não significativo |
+| Stars vs LCOM*_avg | −0,0093 | 0,772 | Não significativo |
 
 **Hipótese H1:** Repositórios mais populares devem ter melhor qualidade (menor CBO, DIT, LCOM*).
 
@@ -258,9 +258,9 @@ A Figura 2 apresenta gráficos de Stars vs. as três métricas de qualidade, com
 
 | Correlação | Spearman ρ | p-valor | Significância |
 |-----------|------------|---------|---------------|
-| Idade vs CBO_avg | 0,0051 | 8,73e-01 | Não significativo |
+| Idade vs CBO_avg | 0,0051 | 0,873 | Não significativo |
 | Idade vs DIT_avg | 0,2857 | 9,56e-20 | Significativo (p < 0,001) |
-| Idade vs LCOM*_avg | 0,0010 | 9,75e-01 | Não significativo |
+| Idade vs LCOM*_avg | 0,0010 | 0,975 | Não significativo |
 
 **Hipótese H2:** Repositórios mais maduros devem ter melhor qualidade (refatoração ao longo do tempo).
 
@@ -428,8 +428,8 @@ Este estudo analisou 974 dos 1.000 repositórios Java mais populares do GitHub, 
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/PauloRubinger/LAB-02.git
-cd LAB-02
+git clone https://github.com/PauloRubinger/lab-02.git
+cd lab-02
 
 # 2. Crie ambiente virtual e instale dependências
 python -m venv .venv
@@ -448,7 +448,7 @@ python src/analysis/correlations.py
 
 | Artefato | Localização |
 |----------|-------------|
-| Repositório | [https://github.com/PauloRubinger/LAB-02](https://github.com/PauloRubinger/LAB-02) |
+| Repositório | [https://github.com/PauloRubinger/lab-02](https://github.com/PauloRubinger/lab-02) |
 | Dados brutos (metadados) | `data/raw/repositories.csv` |
 | Dados processados (métricas) | `data/processed/consolidated_metrics.csv` |
 | Estatísticas descritivas | `reports/descriptive_stats.json` |
@@ -533,4 +533,4 @@ seaborn>=0.12.0
 
 ---
 
-**Versão:** 3.0.0 | **Data:** 10/04/2026 | **Status:** Revisado
+**Versão:** 3.0.1 | **Data:** 10/09/2026 | **Status:** Revisado
