@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINAL_REPORT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background-color: #fff;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+            margin: 30px 0 20px 0;
+            color: #000;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            border-left: 4px solid #000;
+            padding-left: 15px;
+            margin: 25px 0 15px 0;
+            color: #000;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            margin: 20px 0 10px 0;
+            color: #000;
+            font-size: 1.3em;
+        }
+        
+        h4, h5, h6 {
+            margin: 15px 0 8px 0;
+            color: #333;
+        }
+        
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin: 10px 0 10px 30px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        pre {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #ddd;
+            padding-left: 20px;
+            margin: 10px 0;
+            color: #777;
+            font-style: italic;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: #003d80;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        hr {
+            border: none;
+            border-top: 2px solid #ddd;
+            margin: 30px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+        
+        .toc {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        @media print {
+            body {
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            a {
+                color: #000;
+                text-decoration: underline;
+            }
+            
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+            
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="um-estudo-das-caracteristicas-de-qualidade-de-sistemas-java-correlacao-entre-metricas-de-processo-e-produto">Um Estudo das Características de Qualidade de Sistemas Java: Correlação entre Métricas de Processo e Produto</h1>
+<p><strong>Autor:</strong> Paulo Victor Pimenta Rubinger<br />
+<strong>Data:</strong> 05 de Abril de 2026<br />
+<strong>Versão do Relatório:</strong> 3.0.1<br />
+<strong>Repositório:</strong> <a href="https://github.com/PauloRubinger/lab-02">https://github.com/PauloRubinger/lab-02</a><br />
+<strong>Disciplina:</strong> Laboratório de Experimentação de Software (6º período — Engenharia de Software)<br />
+<strong>Professor:</strong> João Paulo Carneiro Aramuni</p>
+<hr />
+<h2 id="resumo">Resumo</h2>
+<p>Este experimento analisou <strong>974 repositórios Java</strong> da plataforma GitHub para investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código: <strong>CBO</strong> (<em>Coupling Between Objects</em> — acoplamento entre objetos), <strong>DIT</strong> (<em>Depth of Inheritance Tree</em> — profundidade da árvore de herança) e <strong>LCOM</strong><em> (</em>Lack of Cohesion of Methods* — falta de coesão entre métodos, versão normalizada).</p>
+<p><strong>Principais Resultados:</strong></p>
+<ul>
+<li><strong>974 repositórios (97,4%)</strong> foram analisados com sucesso dentre os 1.000 coletados.</li>
+<li><strong>Correlações significativas</strong> encontradas entre tamanho do código e todas as métricas de qualidade.</li>
+<li><strong>Repositórios maiores</strong> tendem a ter <strong>maior acoplamento e menor coesão</strong>.</li>
+<li><strong>Atividade (releases)</strong> correlaciona positivamente com piores métricas de qualidade.</li>
+<li><strong>Popularidade (stars)</strong> não apresenta correlação significativa com qualidade.</li>
+</ul>
+<hr />
+<h2 id="1-introducao">1. Introdução</h2>
+<h3 id="11-contextualizacao">1.1 Contextualização</h3>
+<p>O desenvolvimento de software open-source caracteriza-se por um ambiente colaborativo onde múltiplos desenvolvedores contribuem em diferentes partes do código. Neste contexto, um dos principais riscos é a degradação dos atributos de qualidade interna do sistema, como:</p>
+<ul>
+<li><strong>Modularidade</strong> — capacidade de decomposição em partes independentes.</li>
+<li><strong>Manutenibilidade</strong> — facilidade de realizar mudanças sem introduzir defeitos.</li>
+<li><strong>Legibilidade</strong> — compreensibilidade do código por outros desenvolvedores.</li>
+</ul>
+<h3 id="12-problema-foco-do-experimento">1.2 Problema Foco do Experimento</h3>
+<p>Como características do processo de desenvolvimento (quantidade de contribuições, idade do projeto, popularidade) se relacionam com a qualidade interna do código? Existe correlação mensurável entre métricas de processo e produto?</p>
+<h3 id="13-questoes-de-pesquisa">1.3 Questões de Pesquisa</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Questão de Pesquisa</th>
+<th>Variável Independente</th>
+<th>Variável Dependente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RQ01</td>
+<td>Qual a relação entre a <strong>popularidade</strong> dos repositórios e suas características de qualidade?</td>
+<td>Estrelas (stars)</td>
+<td>CBO, DIT, LCOM*</td>
+</tr>
+<tr>
+<td>RQ02</td>
+<td>Qual a relação entre a <strong>maturidade</strong> dos repositórios e suas características de qualidade?</td>
+<td>Idade (anos)</td>
+<td>CBO, DIT, LCOM*</td>
+</tr>
+<tr>
+<td>RQ03</td>
+<td>Qual a relação entre a <strong>atividade</strong> dos repositórios e suas características de qualidade?</td>
+<td>Releases</td>
+<td>CBO, DIT, LCOM*</td>
+</tr>
+<tr>
+<td>RQ04</td>
+<td>Qual a relação entre o <strong>tamanho</strong> dos repositórios e suas características de qualidade?</td>
+<td>LOC (Lines of Code)</td>
+<td>CBO, DIT, LCOM*</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-hipoteses-informais">1.4 Hipóteses Informais</h3>
+<ul>
+<li><strong>H1</strong>: Repositórios <strong>mais populares</strong> devem ter <strong>melhor qualidade</strong> (menor CBO, DIT, LCOM*).</li>
+<li><strong>H2</strong>: Repositórios <strong>mais maduros</strong> (mais antigos) devem ter <strong>melhor qualidade</strong> (refatoração ao longo do tempo).</li>
+<li><strong>H3</strong>: Repositórios com <strong>mais releases</strong> devem ter <strong>melhor qualidade</strong> (maior atividade = melhor manutenção).</li>
+<li><strong>H4</strong>: Repositórios <strong>maiores</strong> terão <strong>pior qualidade</strong> (maior LOC correlaciona com maior complexidade).</li>
+</ul>
+<h3 id="15-objetivo">1.5 Objetivo</h3>
+<p><strong>Objetivo Principal:</strong> Investigar a correlação entre características do processo de desenvolvimento (popularidade, maturidade, atividade, tamanho) e métricas de qualidade de código (CBO, DIT, LCOM*) em repositórios Java populares.</p>
+<p><strong>Objetivos Específicos:</strong></p>
+<ol>
+<li>Coletar dados de 1.000 repositórios Java populares do GitHub.</li>
+<li>Calcular métricas de qualidade usando a ferramenta CK.</li>
+<li>Analisar correlações estatísticas entre variáveis independentes e dependentes.</li>
+<li>Identificar padrões e outliers.</li>
+<li>Validar hipóteses por meio de testes estatísticos.</li>
+</ol>
+<hr />
+<h2 id="2-metodologia">2. Metodologia</h2>
+<h3 id="21-tipo-de-estudo">2.1 Tipo de Estudo</h3>
+<ul>
+<li><strong>Tipo:</strong> Estudo observacional / correlacional</li>
+<li><strong>Unidade de análise:</strong> Repositório Git</li>
+<li><strong>Abordagem:</strong> Análise quantitativa com técnicas estatísticas</li>
+</ul>
+<h3 id="22-fluxo-do-experimento">2.2 Fluxo do Experimento</h3>
+<p>O experimento seguiu um pipeline automatizado de cinco fases, representado no fluxograma a seguir:</p>
+<pre class="codehilite"><code>┌─────────────────────────────────────────┐
+│  Fase 1 — Seleção                       │
+│  GitHub GraphQL API                     │
+│  Top-1.000 repos Java por stars         │
+└────────────────────┬────────────────────┘
+                     ▼
+┌─────────────────────────────────────────┐
+│  Fase 2 — Coleta de Metadados           │
+│  Stars, Releases, Data de criação, URL  │
+└────────────────────┬────────────────────┘
+                     ▼
+┌─────────────────────────────────────────┐
+│  Fase 3 — Análise Estática              │
+│  git clone --depth 1                    │
+│  CK 0.7.1-SNAPSHOT                      │
+│  Extração de CBO, DIT, LCOM*, LOC       │
+│                                         │
+│  Falha no CK (26 repos)?               │
+│    → Registra erro, pula para próximo   │
+└────────────────────┬────────────────────┘
+                     ▼
+┌─────────────────────────────────────────┐
+│  Fase 4 — Consolidação                  │
+│  Agregação por repositório              │
+│  (média, mediana, desvio padrão)        │
+│  Limpeza de dados ausentes              │
+└────────────────────┬────────────────────┘
+                     ▼
+┌─────────────────────────────────────────┐
+│  Fase 5 — Análise Estatística           │
+│  Estatísticas descritivas               │
+│  Correlações de Spearman e Pearson      │
+│  Geração de gráficos                    │
+└─────────────────────────────────────────┘
+</code></pre>
+
+<p><strong>Descrição das Fases:</strong></p>
+<ol>
+<li><strong>Seleção de Repositórios:</strong> Consulta à GitHub GraphQL API para buscar os 1.000 repositórios Java com mais estrelas, filtrando apenas repositórios com pelo menos um arquivo Java.</li>
+<li><strong>Coleta de Metadados:</strong> Para cada repositório, são coletados: <code>stargazerCount</code>, <code>releases.totalCount</code>, <code>createdAt</code> e URL para clone.</li>
+<li><strong>Análise Estática com CK:</strong> Clone raso (<code>--depth 1</code>) de cada repositório, execução da ferramenta CK para gerar <code>class.csv</code> com métricas por classe, e extração de CBO, DIT, LCOM* e LOC.</li>
+<li><strong>Consolidação:</strong> Agregação das métricas em nível de repositório (média, mediana, desvio padrão, min, max) e limpeza de dados ausentes ou inconsistentes.</li>
+<li><strong>Análise Estatística:</strong> Cálculo de estatísticas descritivas, correlações de Spearman (primária) e Pearson (complementar), e geração de gráficos.</li>
+</ol>
+<h3 id="23-amostra">2.3 Amostra</h3>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tamanho inicial</strong></td>
+<td>1.000 repositórios</td>
+</tr>
+<tr>
+<td><strong>Analisados com sucesso</strong></td>
+<td>974 (97,4%)</td>
+</tr>
+<tr>
+<td><strong>Excluídos</strong></td>
+<td>26 (2,6%) — falha na análise CK</td>
+</tr>
+<tr>
+<td><strong>Critério de seleção</strong></td>
+<td>Top Java repositories por stars no GitHub</td>
+</tr>
+<tr>
+<td><strong>Período</strong></td>
+<td>Snapshot em 09/04/2026</td>
+</tr>
+<tr>
+<td><strong>Inclusão</strong></td>
+<td>Todos os repos com pelo menos 1 arquivo Java</td>
+</tr>
+<tr>
+<td><strong>Exclusão</strong></td>
+<td>Repos vazios, forks privados</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-ferramentas-e-materiais">2.4 Ferramentas e Materiais</h3>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Versão</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.14.3</td>
+<td>Orquestração do pipeline e análise estatística</td>
+</tr>
+<tr>
+<td>GitHub GraphQL API</td>
+<td>v4</td>
+<td>Coleta de metadados dos repositórios</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>2.40.0</td>
+<td>Clone raso dos repositórios</td>
+</tr>
+<tr>
+<td>CK</td>
+<td>0.7.1-SNAPSHOT</td>
+<td>Análise estática de código Java</td>
+</tr>
+<tr>
+<td>pandas</td>
+<td>≥2.0.0</td>
+<td>Manipulação e consolidação de dados</td>
+</tr>
+<tr>
+<td>scipy</td>
+<td>≥1.10.0</td>
+<td>Testes estatísticos e correlações</td>
+</tr>
+<tr>
+<td>matplotlib / seaborn</td>
+<td>≥3.7.0 / ≥0.12.0</td>
+<td>Geração de gráficos e visualizações</td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-metricas-utilizadas">2.5 Métricas Utilizadas</h3>
+<h4 id="251-metricas-de-processo-variaveis-independentes">2.5.1 Métricas de Processo (Variáveis Independentes)</h4>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Unidade</th>
+<th>Fórmula</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Popularidade (Stars)</td>
+<td>Contagem</td>
+<td><code>stargazerCount</code></td>
+<td>Número de estrelas do repositório</td>
+</tr>
+<tr>
+<td>Maturidade (Idade)</td>
+<td>Anos</td>
+<td><code>ano_atual − ano_criação</code></td>
+<td>Quantos anos o repositório existe</td>
+</tr>
+<tr>
+<td>Atividade (Releases)</td>
+<td>Contagem</td>
+<td><code>releases.totalCount</code></td>
+<td>Número de releases/versões publicadas</td>
+</tr>
+<tr>
+<td>Tamanho (LOC)</td>
+<td>Linhas</td>
+<td><code>SUM(loc) / n_classes</code></td>
+<td>Média de linhas de código por classe</td>
+</tr>
+</tbody>
+</table>
+<h4 id="252-metricas-de-qualidade-variaveis-dependentes">2.5.2 Métricas de Qualidade (Variáveis Dependentes)</h4>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Unidade</th>
+<th>Range</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CBO</strong> (Coupling Between Objects)</td>
+<td>Contagem</td>
+<td>0–∞</td>
+<td>Quantas classes estão acopladas a esta classe. <strong>Menor = Melhor.</strong></td>
+</tr>
+<tr>
+<td><strong>DIT</strong> (Depth Inheritance Tree)</td>
+<td>Níveis</td>
+<td>0–∞</td>
+<td>Profundidade da árvore de herança. <strong>Menor = Melhor.</strong></td>
+</tr>
+<tr>
+<td><strong>LCOM</strong>* (Lack of Cohesion of Methods)</td>
+<td>Razão normalizada</td>
+<td>0–1</td>
+<td>Falta de coesão entre métodos. <strong>Menor = Melhor.</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota:</strong> Utilizamos a versão normalizada LCOM<em> (0–1), mais confiável que o LCOM original. Para análise em nível de repositório, usamos </em><em>média, mediana e desvio padrão</em>* das métricas por classe.</p>
+</blockquote>
+<h3 id="26-metodo-estatistico">2.6 Método Estatístico</h3>
+<ol>
+<li><strong>Estatísticas Descritivas:</strong> Média, mediana, desvio padrão, min e max para todas as métricas.</li>
+<li><strong>Correlação de Spearman (primária):</strong> Adequada para relações monotônicas não necessariamente lineares.</li>
+<li><strong>Correlação de Pearson (complementar):</strong> Para avaliar relações lineares.</li>
+<li><strong>Correção de Bonferroni:</strong> Para 12 testes (4 RQs × 3 métricas), α corrigido = 0,05 / 12 ≈ 0,0042.</li>
+<li><strong>Nível de significância:</strong> p &lt; 0,05 (reportando significância também com Bonferroni).</li>
+</ol>
+<h3 id="27-tratamento-de-dados-ausentes-e-excecoes">2.7 Tratamento de Dados Ausentes e Exceções</h3>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Tratamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clone falha (URL inválida / timeout)</td>
+<td>Registra erro no log, pula para o próximo repositório</td>
+</tr>
+<tr>
+<td>CK falha (código incompatível)</td>
+<td>Registra erro no log, pula para o próximo repositório</td>
+</tr>
+<tr>
+<td>Métrica faltante (CK não gerou <code>class.csv</code>)</td>
+<td>Marca como incompleto, exclui da análise</td>
+</tr>
+<tr>
+<td>Repositório duplicado</td>
+<td>Deduplica antes do processamento</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resultado:</strong> Dos 1.000 repositórios coletados, 26 (2,6%) falharam na análise CK e foram excluídos, resultando em <strong>974 repositórios analisados</strong>.</p>
+<hr />
+<h2 id="3-resultados">3. Resultados</h2>
+<h3 id="31-estatisticas-descritivas">3.1 Estatísticas Descritivas</h3>
+<p><strong>Métricas de Processo (n = 974):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Desvio Padrão</th>
+<th>Min</th>
+<th>Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>9.442,41</td>
+<td>5.786,50</td>
+<td>10.714,38</td>
+<td>3.473</td>
+<td>125.017</td>
+</tr>
+<tr>
+<td>Releases</td>
+<td>41,01</td>
+<td>11,00</td>
+<td>89,95</td>
+<td>0</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>Idade (anos)</td>
+<td>10,14</td>
+<td>10,31</td>
+<td>3,18</td>
+<td>0,56</td>
+<td>17,47</td>
+</tr>
+<tr>
+<td>LOC_avg</td>
+<td>50,93</td>
+<td>44,23</td>
+<td>31,45</td>
+<td>2,00</td>
+<td>406,33</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Métricas de Qualidade (n = 974):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Média</th>
+<th>Mediana</th>
+<th>Desvio Padrão</th>
+<th>Min</th>
+<th>Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CBO_avg</td>
+<td>5,38</td>
+<td>5,33</td>
+<td>1,87</td>
+<td>0,00</td>
+<td>21,89</td>
+</tr>
+<tr>
+<td>DIT_avg</td>
+<td>1,46</td>
+<td>1,39</td>
+<td>0,35</td>
+<td>1,00</td>
+<td>4,39</td>
+</tr>
+<tr>
+<td>LCOM*_avg</td>
+<td>0,24</td>
+<td>0,25</td>
+<td>0,09</td>
+<td>0,00</td>
+<td>0,75</td>
+</tr>
+</tbody>
+</table>
+<p>As métricas de processo apresentam alta variabilidade: a mediana de stars (5.787) é bem inferior à média (9.442), indicando distribuição fortemente assimétrica com poucos repositórios concentrando muitas estrelas. O mesmo se observa em releases, cuja mediana (11) é quatro vezes menor que a média (41). Já as métricas de qualidade possuem menor variabilidade relativa, com médias e medianas próximas — em especial LCOM* (média 0,24 vs. mediana 0,25), sugerindo distribuição simétrica.</p>
+<h3 id="32-distribuicao-das-metricas-de-qualidade">3.2 Distribuição das Métricas de Qualidade</h3>
+<p>A Figura 1 apresenta os histogramas de distribuição das três métricas de qualidade analisadas, com linhas indicando média (vermelha) e mediana (verde) de cada distribuição.</p>
+<p><img alt="Figura 1 — Distribuição de CBO_avg, DIT_avg e LCOM*_avg nos 974 repositórios analisados." src="figures/distributions.png" /></p>
+<p><strong>Descrição:</strong> O gráfico apresenta três histogramas lado a lado, cada um mostrando a distribuição de uma métrica de qualidade nos 974 repositórios. CBO_avg (esquerda) exibe distribuição assimétrica à direita; DIT_avg (centro) está fortemente concentrado próximo a 1; LCOM*_avg (direita) distribui-se de forma mais uniforme entre 0 e 0,5.</p>
+<p><strong>Insights:</strong></p>
+<ul>
+<li><strong>CBO_avg</strong> apresenta distribuição assimétrica à direita, com a maioria dos repositórios concentrada entre 3 e 7. Poucos repositórios ultrapassam CBO = 10, indicando que a maior parte dos projetos Java populares mantém acoplamento relativamente baixo. O outlier com CBO ≈ 22 sugere um projeto com arquitetura altamente acoplada.</li>
+<li><strong>DIT_avg</strong> é fortemente concentrada próxima de 1, revelando que a grande maioria dos projetos Java utiliza pouca herança. Valores acima de 2,5 são raros, indicando que hierarquias de herança profundas são exceção entre os projetos populares.</li>
+<li><strong>LCOM*_avg</strong> distribui-se de forma relativamente uniforme entre 0 e 0,5, sem concentração extrema em nenhum ponto. A proximidade entre média (0,24) e mediana (0,25) confirma a simetria da distribuição.</li>
+</ul>
+<h3 id="33-rq01-popularidade-vs-qualidade">3.3 RQ01 — Popularidade vs. Qualidade</h3>
+<p><strong>Pergunta:</strong> Qual a relação entre a popularidade dos repositórios (stars) e suas métricas de qualidade?</p>
+<table>
+<thead>
+<tr>
+<th>Correlação</th>
+<th>Spearman ρ</th>
+<th>p-valor</th>
+<th>Significância</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars vs CBO_avg</td>
+<td>0,0273</td>
+<td>0,394</td>
+<td>Não significativo</td>
+</tr>
+<tr>
+<td>Stars vs DIT_avg</td>
+<td>−0,0439</td>
+<td>0,171</td>
+<td>Não significativo</td>
+</tr>
+<tr>
+<td>Stars vs LCOM*_avg</td>
+<td>−0,0093</td>
+<td>0,772</td>
+<td>Não significativo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hipótese H1:</strong> Repositórios mais populares devem ter melhor qualidade (menor CBO, DIT, LCOM*).</p>
+<p><strong>Resultado:</strong> <strong>H1 rejeitada.</strong> Não foram encontradas correlações estatisticamente significativas entre popularidade (stars) e nenhuma das métricas de qualidade (p &gt; 0,05 em todos os casos).</p>
+<p>A Figura 2 apresenta gráficos de Stars vs. as três métricas de qualidade, com linha de tendência e valores de correlação de Spearman.</p>
+<p><img alt="Figura 2 — Scatter plots: Stars vs. CBO_avg, DIT_avg e LCOM*_avg. Nenhuma correlação significativa." src="figures/scatter_stars_RQ01.png" /></p>
+<p><strong>Descrição:</strong> Os três gráficos mostram a distribuição de 974 repositórios no espaço Stars × métrica de qualidade. A grande concentração de pontos à esquerda (repositórios com menos de 20.000 stars) e as linhas de tendência praticamente horizontais evidenciam a ausência de relação.</p>
+<p><strong>Insights:</strong></p>
+<ul>
+<li>A distribuição dos pontos é dominada por repositórios com até 20.000 stars, criando uma nuvem densa à esquerda do gráfico. Repositórios com mais de 40.000 stars são raros e dispersos, sem tendência clara em nenhuma métrica.</li>
+<li>As linhas de tendência são praticamente horizontais, confirmando visualmente que a <strong>popularidade de um repositório no GitHub não é um indicador de qualidade interna do código</strong>. Um projeto pode ser extremamente popular e ter código de qualidade variável.</li>
+</ul>
+<h3 id="34-rq02-maturidade-vs-qualidade">3.4 RQ02 — Maturidade vs. Qualidade</h3>
+<p><strong>Pergunta:</strong> Qual a relação entre a maturidade (idade em anos) dos repositórios e suas métricas de qualidade?</p>
+<table>
+<thead>
+<tr>
+<th>Correlação</th>
+<th>Spearman ρ</th>
+<th>p-valor</th>
+<th>Significância</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Idade vs CBO_avg</td>
+<td>0,0051</td>
+<td>0,873</td>
+<td>Não significativo</td>
+</tr>
+<tr>
+<td>Idade vs DIT_avg</td>
+<td>0,2857</td>
+<td>9,56e-20</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+<tr>
+<td>Idade vs LCOM*_avg</td>
+<td>0,0010</td>
+<td>0,975</td>
+<td>Não significativo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hipótese H2:</strong> Repositórios mais maduros devem ter melhor qualidade (refatoração ao longo do tempo).</p>
+<p><strong>Resultado:</strong> <strong>H2 parcialmente rejeitada.</strong> A maturidade não mostrou correlação significativa com CBO (acoplamento) nem com LCOM* (coesão). Porém, repositórios mais antigos apresentam maior DIT (ρ = 0,29, p &lt; 0,001), sugerindo acúmulo de herança ao longo do tempo.</p>
+<p>A Figura 3 apresenta gráficos de Idade (anos) vs. as três métricas de qualidade.</p>
+<p><img alt="Figura 3 — Scatter plots: Idade (anos) vs. CBO_avg, DIT_avg e LCOM*_avg. Apenas DIT apresenta correlação significativa." src="figures/scatter_ageyears_RQ02.png" /></p>
+<p><strong>Descrição:</strong> Os gráficos mostram a relação entre a idade do repositório (eixo x, em anos) e cada métrica de qualidade. No painel central (DIT_avg), a linha de tendência ascendente e a marcação "[SIG]" no subtítulo do gráfico indicam a única correlação significativa desta RQ.</p>
+<p><strong>Insights:</strong></p>
+<ul>
+<li>A correlação com DIT (ρ = 0,29) é a única significativa, indicando que <strong>projetos mais antigos tendem a acumular hierarquias de herança mais profundas</strong> ao longo do tempo — possivelmente por extensões incrementais via subclasses, um padrão comum em projetos Java de longa duração.</li>
+<li>A ausência de correlação com CBO e LCOM<em> sugere que </em><em>acoplamento e coesão são mais influenciados por decisões de design arquitetural</em>* do que pelo tempo de existência do projeto. Projetos antigos não necessariamente degradam nessas dimensões.</li>
+</ul>
+<h3 id="35-rq03-atividade-vs-qualidade">3.5 RQ03 — Atividade vs. Qualidade</h3>
+<p><strong>Pergunta:</strong> Qual a relação entre a atividade (releases) dos repositórios e suas métricas de qualidade?</p>
+<table>
+<thead>
+<tr>
+<th>Correlação</th>
+<th>Spearman ρ</th>
+<th>p-valor</th>
+<th>Significância</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Releases vs CBO_avg</td>
+<td>0,3997</td>
+<td>1,16e-38</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+<tr>
+<td>Releases vs DIT_avg</td>
+<td>0,2095</td>
+<td>4,03e-11</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+<tr>
+<td>Releases vs LCOM*_avg</td>
+<td>0,1847</td>
+<td>6,36e-09</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hipótese H3:</strong> Repositórios com mais releases devem ter melhor qualidade (maior atividade = melhor manutenção).</p>
+<p><strong>Resultado:</strong> <strong>H3 rejeitada.</strong> Contrariando a hipótese, todas as correlações são positivas e altamente significativas, indicando que projetos com mais releases apresentam <strong>pior</strong> qualidade interna.</p>
+<p>A Figura 4 apresenta gráficos de Releases vs. as três métricas de qualidade.</p>
+<p><img alt="Figura 4 — Scatter plots: Releases vs. CBO_avg, DIT_avg e LCOM*_avg. Todas as correlações são significativas e positivas." src="figures/scatter_releases_RQ03.png" /></p>
+<p><strong>Descrição:</strong> Os três gráficos mostram correlações positivas entre o número de releases e cada métrica de qualidade. Os dados estão concentrados à esquerda (maioria dos repositórios tem poucas releases), mas as linhas de tendência ascendentes e as marcações "[SIG]" no subtítulo do gráfico em todos os painéis indicam relações estatisticamente significativas.</p>
+<p><strong>Insights:</strong></p>
+<ul>
+<li>A correlação mais forte é com CBO (ρ = 0,40), indicando que <strong>projetos mais ativos tendem a ter maior acoplamento entre classes</strong>. Isso pode refletir que projetos com muitas releases crescem em escopo e funcionalidades, adicionando dependências entre módulos.</li>
+<li>As correlações com DIT (ρ = 0,21) e LCOM<em> (ρ = 0,18) são mais fracas, mas ainda significativas. O padrão geral sugere que a </em><em>atividade intensa não implica melhor manutenção</em>* — ao contrário, projetos muito ativos parecem acumular complexidade estrutural com cada nova versão.</li>
+<li>É possível que releases frequentes sejam um indicador para <strong>tamanho e complexidade do projeto</strong>, e não diretamente para qualidade.</li>
+</ul>
+<h3 id="36-rq04-tamanho-vs-qualidade">3.6 RQ04 — Tamanho vs. Qualidade</h3>
+<p><strong>Pergunta:</strong> Qual a relação entre o tamanho (LOC médio por classe) dos repositórios e suas métricas de qualidade?</p>
+<table>
+<thead>
+<tr>
+<th>Correlação</th>
+<th>Spearman ρ</th>
+<th>p-valor</th>
+<th>Significância</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOC_avg vs CBO_avg</td>
+<td>0,4257</td>
+<td>3,76e-44</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+<tr>
+<td>LOC_avg vs DIT_avg</td>
+<td>0,3748</td>
+<td>7,54e-34</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+<tr>
+<td>LOC_avg vs LCOM*_avg</td>
+<td>0,5930</td>
+<td>1,48e-93</td>
+<td>Significativo (p &lt; 0,001)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hipótese H4:</strong> Repositórios maiores terão pior qualidade (maior LOC correlaciona com maior complexidade).</p>
+<p><strong>Resultado:</strong> <strong>H4 confirmada.</strong> Todas as correlações são positivas e altamente significativas. A correlação mais forte é entre LOC e LCOM* (ρ = 0,59 — moderada a forte), seguida de LOC e CBO (ρ = 0,43 — moderada) e LOC e DIT (ρ = 0,37 — moderada).</p>
+<p>A Figura 5 apresenta gráficos de LOC_avg vs. as três métricas de qualidade.</p>
+<p><img alt="Figura 5 — Scatter plots: LOC_avg vs. CBO_avg, DIT_avg e LCOM*_avg. Todas as correlações são significativas, com destaque para LOC vs. LCOM* (ρ = 0,59)." src="figures/scatter_locavg_RQ04.png" /></p>
+<p><strong>Descrição:</strong> Os gráficos revelam tendências ascendentes claras em todos os três painéis. O painel direito (LCOM*_avg) apresenta a tendência mais acentuada, com pontos distribuídos ao longo de uma faixa diagonal bem definida. As marcações "[SIG]" confirmam significância em todos os casos.</p>
+<p><strong>Insights:</strong></p>
+<ul>
+<li>A correlação LOC–LCOM<em> (ρ = 0,59) é a </em><em>mais forte encontrada em todo o estudo</em>*, indicando que classes maiores perdem coesão de maneira consistente. Isso é coerente com o princípio de que classes com muitas linhas tendem a acumular múltiplas responsabilidades.</li>
+<li>A correlação LOC–CBO (ρ = 0,43) mostra que <strong>classes maiores também dependem de mais classes externas</strong>, aumentando o acoplamento. O aumento conjunto de LCOM* e CBO com o tamanho sugere uma violação simultânea dos princípios de Single Responsibility e Low Coupling.</li>
+<li>A correlação LOC–DIT (ρ = 0,37), embora moderada, indica que projetos com classes maiores tendem a utilizar hierarquias de herança mais profundas, possivelmente como forma de reutilização de código.</li>
+</ul>
+<h3 id="37-visao-geral-matriz-de-correlacao">3.7 Visão Geral: Matriz de Correlação</h3>
+<p>A Figura 6 apresenta a matriz de correlação de Spearman entre todas as métricas analisadas, resumindo visualmente as relações encontradas.</p>
+<p><img alt="Figura 6 — Matriz de correlação de Spearman entre métricas de processo e qualidade. Cores quentes indicam correlação positiva; cores frias indicam correlação negativa." src="figures/correlation_heatmap.png" /></p>
+<p><strong>Descrição:</strong> O heatmap mostra os coeficientes de correlação de Spearman entre todas as combinações de métricas. Cada célula é colorida de acordo com o valor da correlação (escala de cores), e o valor numérico é exibido no centro.</p>
+<p><strong>Insights:</strong></p>
+<ul>
+<li>O bloco mais intenso está na interseção de LOC_avg com as métricas de qualidade, confirmando que <strong>o tamanho do código é o fator mais associado à qualidade interna</strong>.</li>
+<li>As métricas de qualidade (CBO, DIT, LCOM<em>) estão </em><em>positivamente correlacionadas entre si</em>*, sugerindo que a degradação de qualidade tende a ocorrer simultaneamente em múltiplas dimensões — quando um projeto apresenta alto acoplamento, tende também a ter baixa coesão e herança profunda.</li>
+<li>Stars apresenta correlações muito fracas com todas as demais métricas, reforçando sua <strong>independência em relação à qualidade interna</strong>.</li>
+</ul>
+<hr />
+<h2 id="4-discussao">4. Discussão</h2>
+<h3 id="41-comparacao-entre-hipoteses-e-resultados">4.1 Comparação entre Hipóteses e Resultados</h3>
+<table>
+<thead>
+<tr>
+<th>Hipótese</th>
+<th>Expectativa</th>
+<th>Resultado</th>
+<th>Veredito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1</strong> (Popularidade → Qualidade)</td>
+<td>Mais stars = melhor qualidade</td>
+<td>Nenhuma correlação significativa</td>
+<td><strong>Rejeitada</strong></td>
+</tr>
+<tr>
+<td><strong>H2</strong> (Maturidade → Qualidade)</td>
+<td>Mais antigo = melhor qualidade</td>
+<td>Apenas DIT aumenta com idade</td>
+<td><strong>Parcialmente rejeitada</strong></td>
+</tr>
+<tr>
+<td><strong>H3</strong> (Atividade → Qualidade)</td>
+<td>Mais releases = melhor qualidade</td>
+<td>Mais releases = pior qualidade</td>
+<td><strong>Rejeitada</strong></td>
+</tr>
+<tr>
+<td><strong>H4</strong> (Tamanho → Qualidade)</td>
+<td>Maior LOC = pior qualidade</td>
+<td>Todas as métricas pioram com LOC</td>
+<td><strong>Confirmada</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-interpretacao-dos-resultados">4.2 Interpretação dos Resultados</h3>
+<p><strong>Popularidade não indica qualidade (RQ01).</strong> O número de estrelas reflete interesse da comunidade, utilidade percebida ou marketing do projeto — não a qualidade interna do código. Um desenvolvedor que busca bibliotecas de alta qualidade não deveria se basear unicamente na contagem de stars.</p>
+<p><strong>Maturidade tem efeito limitado (RQ02).</strong> A única correlação significativa foi entre idade e DIT (ρ = 0,29). Projetos mais antigos acumulam hierarquias de herança mais profundas ao longo do tempo, possivelmente por extensões incrementais via subclasses. A ausência de correlação com CBO e LCOM* sugere que acoplamento e coesão são mais influenciados por decisões de design do que pelo tempo de existência do projeto.</p>
+<p><strong>Atividade correlaciona com complexidade, não com qualidade (RQ03).</strong> Projetos com mais releases tendem a ser maiores e mais complexos, o que explica as correlações positivas com CBO (ρ = 0,40), DIT (ρ = 0,21) e LCOM* (ρ = 0,18). A hipótese de que mais releases implicaria melhor manutenção não se confirmou — provavelmente porque projetos ativos crescem em escopo, aumentando a complexidade estrutural.</p>
+<p><strong>Tamanho é o melhor preditor de qualidade (RQ04).</strong> LOC apresentou as correlações mais fortes e consistentes: LCOM* (ρ = 0,59), CBO (ρ = 0,43) e DIT (ρ = 0,37). Classes maiores tendem a acumular mais responsabilidades (baixa coesão), mais dependências (alto acoplamento) e hierarquias mais profundas. Este resultado reforça o princípio do Single Responsibility e a importância de manter classes pequenas.</p>
+<h3 id="43-sintese-dos-insights">4.3 Síntese dos Insights</h3>
+<ol>
+<li><strong>Popularidade não é indicador de qualidade.</strong> A quantidade de estrelas no GitHub não tem relação estatística com as métricas de qualidade interna do código.</li>
+<li><strong>Tamanho é o principal preditor de degradação.</strong> LOC apresentou as correlações mais fortes e consistentes com todas as métricas de qualidade (ρ entre 0,37 e 0,59).</li>
+<li><strong>LCOM tem distribuição relativamente uniforme.</strong> Média (0,24) e mediana (0,25) próximas indicam simetria.</li>
+<li><strong>Atividade e maturidade correlacionam com pior qualidade.</strong> Contrariando as hipóteses iniciais, projetos mais ativos e mais antigos tendem a acumular maior complexidade.</li>
+<li><strong>Métricas de qualidade são intercorrelacionadas.</strong> CBO, DIT e LCOM* degradam simultaneamente, indicando que a perda de qualidade é sistêmica.</li>
+</ol>
+<hr />
+<h2 id="5-ameacas-a-validade">5. Ameaças à Validade</h2>
+<h3 id="51-ameacas-internas">5.1 Ameaças Internas</h3>
+<ul>
+<li><strong>Vieses de seleção:</strong> Apenas os top-1.000 repositórios Java por stars foram analisados, não representando o universo completo de projetos Java.</li>
+<li><strong>Fatores de confusão:</strong> Presença de código gerado automaticamente, múltiplas linguagens no mesmo repositório e diferentes paradigmas de projeto podem influenciar os resultados.</li>
+<li><strong>Falhas de CK:</strong> 2,6% dos repositórios não puderam ser analisados, potencialmente introduzindo viés de seleção.</li>
+</ul>
+<h3 id="52-ameacas-externas">5.2 Ameaças Externas</h3>
+<ul>
+<li><strong>Generalização:</strong> Os resultados valem especificamente para Java em repositórios populares no GitHub. Outras linguagens e plataformas podem apresentar padrões diferentes.</li>
+<li><strong>Temporalidade:</strong> Trata-se de um snapshot único (abril de 2026), sem análise da evolução temporal.</li>
+<li><strong>Contexto:</strong> GitHub é uma plataforma específica com características próprias (e.g., stars como métrica social).</li>
+</ul>
+<h3 id="53-ameacas-de-construto">5.3 Ameaças de Construto</h3>
+<ul>
+<li><strong>Métricas CBO/DIT/LCOM*:</strong> São métricas imperfeitas de qualidade — não capturam todos os aspectos de modularidade e manutenibilidade.</li>
+<li><strong>LOC:</strong> Métrica bruta, não diferencia código de alta ou baixa qualidade.</li>
+<li><strong>Releases:</strong> Indica atividade de publicação, não necessariamente manutenção ativa ou qualidade do processo.</li>
+<li><strong>Causalidade:</strong> Correlações não implicam causalidade — não podemos afirmar que LOC <em>causa</em> pior qualidade, apenas que estão associados.</li>
+</ul>
+<hr />
+<h2 id="6-conclusao">6. Conclusão</h2>
+<p>Este estudo analisou 974 dos 1.000 repositórios Java mais populares do GitHub, investigando a relação entre métricas de processo (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código (CBO, DIT, LCOM*).</p>
+<p><strong>Achados Principais:</strong></p>
+<ol>
+<li><strong>RQ01 — Popularidade vs. Qualidade:</strong> Não há correlação significativa. A popularidade (stars) não prediz a qualidade interna do código.</li>
+<li><strong>RQ02 — Maturidade vs. Qualidade:</strong> Repositórios mais antigos apresentam herança mais profunda (DIT, ρ = 0,29), mas sem impacto significativo no acoplamento (CBO) ou coesão (LCOM*).</li>
+<li><strong>RQ03 — Atividade vs. Qualidade:</strong> Projetos com mais releases têm pior qualidade em todas as métricas (CBO ρ = 0,40; DIT ρ = 0,21; LCOM* ρ = 0,18), sugerindo crescimento de complexidade com a atividade.</li>
+<li><strong>RQ04 — Tamanho vs. Qualidade:</strong> O tamanho do código (LOC) é o preditor mais forte de degradação da qualidade, com correlação moderada-forte com LCOM* (ρ = 0,59) e moderada com CBO (ρ = 0,43) e DIT (ρ = 0,37).</li>
+</ol>
+<p><strong>Conclusão geral:</strong> O tamanho das classes é o fator dominante na qualidade do código Java. Projetos devem priorizar classes menores e mais coesas para manter bons indicadores de qualidade interna, independentemente da popularidade ou idade do repositório.</p>
+<p><strong>Recomendações para pesquisa futura:</strong></p>
+<ol>
+<li>Estender a análise a outras linguagens de programação.</li>
+<li>Coletar dados longitudinais (acompanhar os mesmos repositórios ao longo do tempo).</li>
+<li>Incluir análise qualitativa (entrevistas com mantenedores).</li>
+<li>Investigar práticas específicas que melhoram qualidade (e.g., code review, CI/CD).</li>
+<li>Correlacionar métricas de código com defeitos reportados (issues).</li>
+</ol>
+<hr />
+<h2 id="7-reprodutibilidade">7. Reprodutibilidade</h2>
+<h3 id="71-como-repetir-o-experimento">7.1 Como Repetir o Experimento</h3>
+<pre class="codehilite"><code class="language-bash"># 1. Clone o repositório
+git clone https://github.com/PauloRubinger/lab-02.git
+cd lab-02
+
+# 2. Crie ambiente virtual e instale dependências
+python -m venv .venv
+.venv\Scripts\Activate.ps1    # Windows
+source .venv/bin/activate      # Linux/Mac
+pip install -r requirements.txt
+
+# 3. Execute o pipeline de coleta e análise estática
+python src/main.py
+
+# 4. Gere análise estatística e gráficos
+python src/analysis/correlations.py
+</code></pre>
+
+<h3 id="72-dados-e-codigo">7.2 Dados e Código</h3>
+<table>
+<thead>
+<tr>
+<th>Artefato</th>
+<th>Localização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repositório</td>
+<td><a href="https://github.com/PauloRubinger/lab-02">https://github.com/PauloRubinger/lab-02</a></td>
+</tr>
+<tr>
+<td>Dados brutos (metadados)</td>
+<td><code>data/raw/repositories.csv</code></td>
+</tr>
+<tr>
+<td>Dados processados (métricas)</td>
+<td><code>data/processed/consolidated_metrics.csv</code></td>
+</tr>
+<tr>
+<td>Estatísticas descritivas</td>
+<td><code>reports/descriptive_stats.json</code></td>
+</tr>
+<tr>
+<td>Correlações detalhadas</td>
+<td><code>reports/correlations_detailed.json</code></td>
+</tr>
+<tr>
+<td>Código-fonte</td>
+<td><code>src/</code></td>
+</tr>
+<tr>
+<td>Logs de execução</td>
+<td><code>logs/processing_*.json</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="referencias">Referências</h2>
+<ol>
+<li>
+<p><strong>CK — Code Metrics:</strong> Aniche, M. <em>CK: A tool to compute class-level code metrics for Java projects.</em> Disponível em: <a href="https://github.com/mauricioaniche/ck">https://github.com/mauricioaniche/ck</a></p>
+</li>
+<li>
+<p><strong>GitHub GraphQL API v4.</strong> Disponível em: <a href="https://docs.github.com/en/graphql">https://docs.github.com/en/graphql</a></p>
+</li>
+</ol>
+<hr />
+<h2 id="apendices">Apêndices</h2>
+<h3 id="apendice-a-configuracoes-e-parametros">Apêndice A — Configurações e Parâmetros</h3>
+<pre class="codehilite"><code class="language-python"># GitHub GraphQL Query
+query: &quot;language:Java sort:stars&quot;
+max_results: 1000
+fetch_per_page: 10
+
+# Git Clone
+depth: 1  # Shallow clone para economizar armazenamento em disco
+timeout: 600s por repositório
+
+# Processamento
+batch_size: 1 repo por vez  # Para economizar armazenamento em disco
+</code></pre>
+
+<h3 id="apendice-b-logs-de-execucao">Apêndice B — Logs de Execução</h3>
+<p><strong>Resumo da execução:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total de repositórios tentados</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>Clone bem-sucedido</td>
+<td>1.000 (100%)</td>
+</tr>
+<tr>
+<td>Análise CK bem-sucedida</td>
+<td>974 (97,4%)</td>
+</tr>
+<tr>
+<td>Análise CK falhou</td>
+<td>26 (2,6%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Matriz de falhas:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tipo de Falha</th>
+<th>Contagem</th>
+<th>Repositórios Afetados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CK NullPointerException</td>
+<td>12</td>
+<td>elastic_elasticsearch, NationalSecurityAgency_ghidra, dbeaver_dbeaver, oracle_graal, thingsboard_thingsboard, questdb_questdb, Grasscutters_Grasscutter, neo4j_neo4j, projectlombok_lombok, trinodb_trino, haifengl_smile, JabRef_jabref</td>
+</tr>
+<tr>
+<td>CK IOException</td>
+<td>3</td>
+<td>JetBrains_intellij-community, checkstyle_checkstyle, dragonwell-project_dragonwell8</td>
+</tr>
+<tr>
+<td>CK Runtime Warning/Error</td>
+<td>1</td>
+<td>openjdk_jdk</td>
+</tr>
+<tr>
+<td>CK ArrayIndexOutOfBoundsException</td>
+<td>1</td>
+<td>google_j2objc</td>
+</tr>
+<tr>
+<td>Metrics Extraction Empty</td>
+<td>9</td>
+<td>Snailclimb_JavaGuide, hollischuang_toBeTopJavaer, frank-lam_fullstack-tutorial, react-native-camera_react-native-camera, CoderLeixiaoshuai_java-eight-part, Archmage83_tvapk, RedSpider1_concurrent, jlegewie_zotfile, NotFound9_interviewGuide</td>
+</tr>
+</tbody>
+</table>
+<h3 id="apendice-c-ambiente-de-execucao">Apêndice C — Ambiente de Execução</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Versão</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sistema Operacional</td>
+<td>Windows 11 / macOS</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.14.3</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>21.0.3</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>2.40.0</td>
+</tr>
+<tr>
+<td>CK</td>
+<td>0.7.1-SNAPSHOT</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dependências Python:</strong></p>
+<pre class="codehilite"><code>certifi==2026.2.25
+charset-normalizer==3.4.6
+idna==3.11
+python-dotenv==1.2.2
+requests==2.33.0
+urllib3==2.6.3
+pandas&gt;=2.0.0
+numpy&gt;=1.24.0
+scipy&gt;=1.10.0
+matplotlib&gt;=3.7.0
+seaborn&gt;=0.12.0
+</code></pre>
+
+<hr />
+<p><strong>Versão:</strong> 3.0.1 | <strong>Data:</strong> 10/09/2026 | <strong>Status:</strong> Revisado</p>
+</body>
+</html>
